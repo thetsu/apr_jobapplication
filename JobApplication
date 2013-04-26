@@ -1,0 +1,2425 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="JobApplication.aspx.cs" Inherits="JobApplication" %>
+
+<%@ Register Assembly="AjaxControlToolkit" Namespace="AjaxControlToolkit" TagPrefix="cc1" %>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <link href="Images/TC.ico" rel="icon" />
+    <title>Tele-centre | Online Application Form</title>
+    <link href="Style.css" rel="stylesheet" type="text/css" />
+    <script type="text/javascript" src="Validation.js"></script>
+</head>
+<body>
+    <form id="form1" runat="server">
+        <table class="table_style_top">
+            <tr>
+                <td>
+                    <table width="100%">
+                        <tr>
+                            <td class="td_left">
+                                <img src="Images/logo.png" alt="Tele-centre" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="btnPersonalInformation" runat="server" Text="Personal Information" />
+                                <asp:Label ID="btnEducationQualification" runat="server" Text="Education-Qualification" />
+                                <asp:Label ID="btnWorkExperience" runat="server" Text="Work Experience" />
+                                <asp:Label ID="btnLanguage" runat="server" Text="Languages" />
+                                <asp:Label ID="btnDeclaration" runat="server" Text="Declaration" />
+                            </td>
+                            <td class="td_right">
+                                <asp:Label ID="lblDate" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table width="100%">
+                        <tr>
+                            <td class="label_style">
+                                <asp:Label ID="Label3" runat="server" Text="- Fields in (*) are required." />
+                                <br/><asp:Label ID="Label4" runat="server" Text="- Fields in (#) are required to fill up at least one field." />
+                                <br/><asp:Label ID="Label5" runat="server" Text="- For all date fields, format is dd/mm/yyyy." />
+                                <br/><br/><asp:ValidationSummary ID="VSErrorStatement" HeaderText="Please enter the information in the required field(s) / format(s)."
+                                    Font-Bold="true" EnableClientScript="true" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <div id="divPersonalInformation" class="div_style" runat="server">
+            <table class="table_style" cellpadding="0">
+                <tr>
+                    <td>
+                        <table class="table_margin">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblName" runat="server" Text="* Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtName" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:Label ID="Label1" runat="server" Text="(Shown in NRIC/Passport)" Font-Size="Small" />
+                                    <asp:RequiredFieldValidator ID="Validator2" ControlToValidate="txtName" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblAlias" runat="server" Text="Alias :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtAlias" runat="server" Width="180px" MaxLength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblPosition" runat="server" Text="* Position Applied For :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlPosition" runat="server" AppendDataBoundItems="True" DataSourceID="DS_Position"
+                                        DataTextField="Description" DataValueField="Description" 
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlPosition_SelectedIndexChanged">
+                                        <asp:ListItem>Select Position</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator1" ControlToValidate="ddlPosition" InitialValue="Select Position" Text="!" Font-Bold="true" runat="server" />                                    
+                                 </td>
+                                 <td class="td_right" style="width: 22%;">
+                                    <asp:CustomValidator ID="CustomValidator11" ControlToValidate="rdEnableRotation" Text="!" Font-Bold="true" 
+                                        ClientValidationFunction="checkEnableRotation" ValidateEmptyText="true" runat="server" Display="Dynamic" /> 
+                                    <asp:Label ID="lblEnableRotation" runat="server" Text="* Able to Perform Shift Work :" Visible="false" />                                                                       
+                                 </td>
+                                 <td class="td_left" style="width: 20%;">
+                                    <asp:RadioButtonList ID="rdEnableRotation" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal" Visible="false">
+                                    </asp:RadioButtonList>                                                                                                           
+                                </td>
+                            </tr>
+                            <div id="divPositionOthers" runat="server">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblPositionOthers" runat="server" Text="* Position Applied (Others) :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtPositionOthers" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:CustomValidator ID="CustomValidator12" ControlToValidate="txtPositionOthers" Text="!" Font-Bold="true" 
+                                        ClientValidationFunction="checkPositionOthers" ValidateEmptyText="true" runat="server" Display="Dynamic" />
+                                </td>
+                            </tr>
+                            </div>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblPreferredJobType" runat="server" Text="* Preferred Job Type :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlPreferredJobType" runat="server" AppendDataBoundItems="True" DataSourceID="DS_JobType"
+                                        DataTextField="Description" DataValueField="Description" 
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlPreferredJobType_SelectedIndexChanged">
+                                        <asp:ListItem>Select Job Type</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator11" ControlToValidate="ddlPreferredJobType" 
+                                        InitialValue="Select Job Type" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>                             
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblExpectedSalary" runat="server" Text="* Expected Salary :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtExpectedSalary" runat="server" Width="120px" MaxLength="20" />
+                                    <asp:Label ID="lblExpectedSalaryCurrency" runat="server" Text="(SGD)" Font-Size="Small" />
+                                    <asp:RequiredFieldValidator ID="Validator38" ControlToValidate="txtExpectedSalary" Text="!" Font-Bold="true" runat="server" />                                    
+                                    &nbsp;&nbsp;&nbsp;&nbsp;
+                                    <asp:CheckBox ID="chkNegotiable" runat="server" />
+                                    <asp:Label ID="lblNegotiable" runat="server" Text="Negotiable" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNoticePeriod" runat="server" Text="* Notice Period :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlNoticePeriod" runat="server" AppendDataBoundItems="True"
+                                        DataSourceID="DS_NoticePeriod" DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Option</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator39" ControlToValidate="ddlNoticePeriod" 
+                                        InitialValue="Select Option" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <div id="divAvailableDate" runat="server">
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblAvailableDate" runat="server" Text="* Date Available to Start :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtAvailableDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtAvailableDate')" />
+                                    <asp:CustomValidator ID="CustomValidator20" ControlToValidate="txtAvailableDate"
+                                        ClientValidationFunction="checkAvailableDate" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter Date Available to Start" Display="None" />
+                                    <asp:RangeValidator ID="rvAvailableDate" Type="Date" ControlToValidate="txtAvailableDate" runat="server" 
+                                        ErrorMessage="Invalid Date Available to Start" Display="None" />
+                                </td>
+                            </tr>
+                            </div>
+                            <div id="divPeriodAvailabe" runat="server">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblPeriodAvailable" runat="server" Text="Period Available :" />
+                                </td>
+                                <td class="td_left">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblAvailableStartDate" runat="server" Text="* Start Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtAvailableStartDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtAvailableStartDate')" />
+                                    <asp:CustomValidator ID="CustomValidator19" ControlToValidate="txtAvailableStartDate"
+                                        ClientValidationFunction="checkPeriodAvailable" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter Period Available: Start Date and End Date" Display="None" />
+                                    <asp:RangeValidator ID="rvAvailableStartDate" Type="Date" ControlToValidate="txtAvailableStartDate" runat="server"   
+                                        ErrorMessage="Invalid Start Date" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblAvailableEndDate" runat="server" Text="* End Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtAvailableEndDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtAvailableEndDate')" />
+                                    <asp:RangeValidator ID="rvAvailableEndDate" Type="Date" ControlToValidate="txtAvailableEndDate" runat="server"   
+                                        ErrorMessage="Invalid End Date" Display="None" />
+                                </td>
+                            </tr>
+                            </div>                                                       
+                        </table>
+                        <asp:Label ID="lblPersonalParticular" runat="server" CssClass="title_bgcolor" Text="PERSONAL PARTICULARS" Width="100%" />
+                        <table class="table_margin">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblNRIC" runat="server" Text="# NRIC / FIN :" />
+                                </td>
+                                <td class="td_left" style="width: 15%;">
+                                    <asp:TextBox ID="txtNRIC" runat="server" Width="120px" MaxLength="20" />
+                                    <%--<asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtNRIC" 
+                                        ClientValidationFunction="checkNRICPassport" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter NRIC/FIN or Passport" Display="None" />--%>
+                                    <asp:CustomValidator ID="CustomValidator2" ControlToValidate="txtNRIC" Text="!" Font-Bold="true" 
+                                        ClientValidationFunction="validateNRIC" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter valid NRIC" Display="Dynamic" />         
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblCitizenship" runat="server" Text="* Citizenship :" />
+                                </td>
+                                <td class="td_left" style="width: 45%;">
+                                    <asp:DropDownList ID="ddlCitizenship" runat="server" DataSourceID="DS_Citizenship"
+                                        DataTextField="Description" DataValueField="Description" AppendDataBoundItems="True"
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlCitizenship_SelectedIndexChanged">
+                                        <asp:ListItem>Select Citizenship</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator3" ControlToValidate="ddlCitizenship" 
+                                        InitialValue="Select Citizenship" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblPRIssuedDate" runat="server" Text="* SPR Issued Date :" Visible="false" />
+                                    <asp:TextBox ID="txtPRIssuedDate" runat="server" Width="100px" MaxLength="10" Visible="false" />
+                                    <img id="cldPRIssuedDate" runat="server" src="Images/calendar.png" alt="Picture" 
+                                        onclick="PopupDatePicker('txtPRIssuedDate')" visible="false" />
+                                    <asp:CustomValidator ID="CustomValidator13" ControlToValidate="txtPRIssuedDate" Text="!" Font-Bold="true" 
+                                        ClientValidationFunction="checkPRIssuedDate" ValidateEmptyText="true" runat="server" Display="Dynamic" /> 
+                                    <asp:RangeValidator ID="rvPRIssuedDate" Type="Date" ControlToValidate="txtPRIssuedDate" runat="server"   
+                                        ErrorMessage="Invalid PR Issued Date" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblPassport" runat="server" Text="# Passport :" />
+                                </td>
+                                <td class="td_left" style="width: 15%;">
+                                    <asp:TextBox ID="txtPassport" runat="server" Width="120px" MaxLength="20" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblExpiryDate" runat="server" Text="Passport Expiry Date :" />
+                                </td>
+                                <td class="td_left" style="width: 45%;">
+                                    <asp:TextBox ID="txtExpiryDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtExpiryDate')" />
+                                    <asp:CustomValidator ID="CustomValidator1" ControlToValidate="txtExpiryDate" 
+                                        ClientValidationFunction="checkPassportExpiryDate" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter Passport and Passport Expiry Date" Display="None" />
+                                    <asp:RangeValidator ID="rvExpiryDate" Type="Date" ControlToValidate="txtExpiryDate" runat="server"   
+                                        ErrorMessage="Invalid Passport Expiry Date" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblDOB" runat="server" Text="* Date of Birth :" />
+                                </td>
+                                <td class="td_left" style="width: 15%;">
+                                    <asp:TextBox ID="txtDOB" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtDOB')" />
+                                    <asp:RequiredFieldValidator ID="Validator5" ControlToValidate="txtDOB" Text="!" Font-Bold="true" runat="server" />
+                                    <%--<asp:RangeValidator ID="RangeValidator1" ControlToValidate="txtDOB" runat="server" 
+                                        MaximumValue='<%# DateTime.Today.AddYears(-16).ToShortDateString() %>' 
+                                        MinimumValue='<%# DateTime.Today.AddYears(-80).ToShortDateString() %>' 
+                                        ErrorMessage="Invalid Date of Birth" Display="None" />--%>
+                                    <asp:RangeValidator ID="rvDOB" Type="Date" ControlToValidate="txtDOB" runat="server"   
+                                        ErrorMessage="Invalid Date of Birth" Display="None" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblNationality" runat="server" Text="* Nationality :" />
+                                </td>
+                                <td class="td_left" style="width: 45%;">
+                                    <asp:DropDownList ID="ddlNationality" runat="server" DataSourceID="DS_Country"
+                                        DataTextField="Country_Name" DataValueField="Country_Name" AppendDataBoundItems="True">
+                                        <asp:ListItem>Select Nationality</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator4" ControlToValidate="ddlNationality" 
+                                        InitialValue="Select Nationality" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblGender" runat="server" Text="* Gender :" />
+                                </td>
+                                <td class="td_left" style="width: 15%;">
+                                    <asp:DropDownList ID="ddlGender" runat="server" DataSourceID="DS_Gender" DataTextField="Description"
+                                        DataValueField="Description" AppendDataBoundItems="True" 
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlGender_SelectedIndexChanged">
+                                        <asp:ListItem>Select Gender</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator6" ControlToValidate="ddlGender" 
+                                        InitialValue="Select Gender" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblRace" runat="server" Text="* Race :" />
+                                </td>
+                                <td class="td_left" style="width: 45%;">
+                                    <asp:DropDownList ID="ddlRace" runat="server" DataSourceID="DS_Race" DataTextField="Description"
+                                        DataValueField="Description" AppendDataBoundItems="True" 
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlRace_SelectedIndexChanged">
+                                        <asp:ListItem>Select Race</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator7" ControlToValidate="ddlRace" 
+                                        InitialValue="Select Race" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblRaceOthers" runat="server" Text="* Race (Others) :" Visible="false" />
+                                    <asp:TextBox ID="txtRaceOthers" runat="server" Width="140px" MaxLength="50" Visible="false" />
+                                    <asp:CustomValidator ID="CustomValidator14" ControlToValidate="txtRaceOthers" Text="!" Font-Bold="true" 
+                                        ClientValidationFunction="checkRaceOthers" ValidateEmptyText="true" runat="server" Display="Dynamic" />                                                                        
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblMaritalStatus" runat="server" Text="* Marital Status :" />
+                                </td>
+                                <td class="td_left" style="width: 15%;">
+                                    <asp:DropDownList ID="ddlMaritalStatus" runat="server" DataSourceID="DS_MaritalStatus"
+                                        DataTextField="Description" DataValueField="Description" AppendDataBoundItems="True" 
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlMaritalStatus_SelectedIndexChanged">
+                                        <asp:ListItem>Select Status</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator8" ControlToValidate="ddlMaritalStatus" 
+                                        InitialValue="Select Status" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblReligion" runat="server" Text="Religion / Denomination :" />
+                                </td>
+                                <td class="td_left" style="width: 45%;">
+                                    <asp:DropDownList ID="ddlReligion" runat="server" DataSourceID="DS_Religion" DataTextField="Description"
+                                        DataValueField="Description" AppendDataBoundItems="True">
+                                        <asp:ListItem>Select Religion</asp:ListItem>
+                                    </asp:DropDownList>                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblContactInfo" runat="server" CssClass="title_bgcolor" Text="CONTACT INFORMATION" Width="100%" />
+                        <table class="table_margin">
+                            <tr>
+                                <td class="td_right_top" style="width: 20%;">
+                                    <asp:Label ID="lblResidentialAddr" runat="server" Text="* Address (Local) :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtResidentialAddr" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="40" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator9" ControlToValidate="txtResidentialAddr" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td class="td_right_top" style="width: 20%;">
+                                    <asp:Label ID="lblHomeCountryAddr" runat="server" Text="Address (Overseas) :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtHomeCountryAddr" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="40" MaxLength="200" />
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblEmailAddr" runat="server" Text="* Email Address :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtEmailAddr" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="RequiredFieldValidator1" ControlToValidate="txtEmailAddr" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator2" ControlToValidate="txtEmailAddr" ErrorMessage="Invalid Email Address" 
+                                        ValidationExpression="([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})" 
+                                        runat="server" Display="None" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblHomeNo" runat="server" Text="Contact No. # (Home) :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtHomeNo" runat="server" Width="120px" MaxLength="8" />
+                                    <asp:CustomValidator ID="CustomValidator3" ControlToValidate="txtHomeNo" 
+                                        ClientValidationFunction="checkContactNo" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter Home, Mobile or Overseas No." Display="None" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator1" ControlToValidate="txtHomeNo" 
+                                        ErrorMessage="Please enter only Numbers & 8 digits starting with 6 (Home No.)" 
+                                        ValidationExpression="^[6]{1}\d{7}$" runat="server" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                </td>                                
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblMobileNo" runat="server" Text="# (Mobile) :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtMobileNo" runat="server" Width="120px" MaxLength="8" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator3" ControlToValidate="txtMobileNo" 
+                                        ErrorMessage="Please enter only Numbers & 8 digits starting with 8 or 9 (Mobile No.)" 
+                                        ValidationExpression="^[8-9]{1}\d{7}$" runat="server" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                </td>                                
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblOverseasNo" runat="server" Text="# (Overseas) :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtOverseasNo" runat="server" Width="120px" MaxLength="50" />
+                                </td>
+                            </tr>                         
+                        </table>
+                        <div id="divSpouseParticular" runat="server">
+                        <asp:Label ID="lblSpouseParticular" runat="server" CssClass="title_bgcolor" Text="SPOUSE PARTICULARS" Width="100%" />                        
+                        <table class="table_margin">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblSpouseName" runat="server" Text="Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSpouseName" runat="server" Width="180px" MaxLength="50" />                                    
+                                    <asp:CustomValidator ID="CustomValidator4" ControlToValidate="txtSpouseName" 
+                                        ClientValidationFunction="checkSpouseParticular" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter Spouse Particulars" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblSpouseNRIC" runat="server" Text="NRIC :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSpouseNRIC" runat="server" Width="120px" MaxLength="20" />
+                                    <asp:CustomValidator ID="CustomValidator17" ControlToValidate="txtSpouseNRIC" 
+                                        ClientValidationFunction="checkIdenticalNRIC" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Applicant's NRIC/FIN and Spouse's NRIC should not be the same." Display="None" />
+                                    <asp:CustomValidator ID="CustomValidator18" ControlToValidate="txtSpouseNRIC" 
+                                        ClientValidationFunction="validateSpouseNRIC" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter valid NRIC (Spouse Particulars)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblSpouseDOB" runat="server" Text="Date of Birth :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSpouseDOB" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtSpouseDOB')" />
+                                    <asp:RangeValidator ID="rvSpouseDOB" Type="Date" ControlToValidate="txtSpouseDOB" runat="server" 
+                                        ErrorMessage="Invalid Date of Birth (Spouse Particulars)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblSpouseNationality" runat="server" Text="Nationality :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlSpouseNationality" runat="server" DataSourceID="DS_Country"
+                                        DataTextField="Country_Name" DataValueField="Country_Name" AppendDataBoundItems="True">
+                                        <asp:ListItem>Select Nationality</asp:ListItem>
+                                    </asp:DropDownList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblSpouseEmployer" runat="server" Text="Employer :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSpouseEmployer" runat="server" Width="180px" MaxLength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblSpouseOccupation" runat="server" Text="Occupation :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSpouseOccupation" runat="server" Width="180px" MaxLength="50" />
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <asp:Label ID="lblChildrenParticular" runat="server" CssClass="title_bgcolor" Text="CHILDREN PARTICULARS" Width="100%" />
+                        <table class="table_style_sub" cellpadding="2" width="98%">
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvChildren" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvChildren_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlChildren" runat="server" DataSourceID="DS_Gender" DataTextField="Description"
+                                                        DataValueField="Description" AppendDataBoundItems="True">
+                                                        <asp:ListItem>Select Gender</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Name">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtChildrenName" runat="server" Width="180px" MaxLength="50" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Date of Birth">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtChildrenDOB" runat="server" Width="100px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtChildrenDOB").ClientID %>')" />                                                        
+                                                        <asp:RangeValidator ID="rvChildrenDOB" Type="Date" ControlToValidate="txtChildrenDOB" runat="server" 
+                                                            MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                            MinimumValue='<%# DateTime.Today.AddYears(-80).ToShortDateString() %>' 
+                                                            Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Employer">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtChildrenEmployer" runat="server" Width="180px" MaxLength="50" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Occupation">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtChildrenOccupation" runat="server" Width="180px" MaxLength="50" />
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnChildren_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnChildren_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnChildren_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnChildren_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblParentsParticular" runat="server" CssClass="title_bgcolor" Text="PARENTS PARTICULARS" Width="100%" />
+                        <table class="table_style_sub" cellpadding="2" width="98%">
+                            <tr>
+                                <td class="FieldNameCenter" style="width: 13%;">
+                                </td>
+                                <td class="FieldNameCenter" style="width: 22%;">
+                                    <asp:Label ID="lblParentsName" runat="server" Text="Name" />
+                                </td>
+                                <td class="FieldNameCenter" style="width: 15%;">
+                                    <asp:Label ID="lblParentsDOB" runat="server" Text="Date of Birth" />
+                                </td>
+                                <td class="FieldNameCenter" style="width: 25%;">
+                                    <asp:Label ID="lblParentsEmployer" runat="server" Text="Employer" />
+                                </td>
+                                <td class="FieldNameCenter" style="width: 25%;">
+                                    <asp:Label ID="lblParentsOccupation" runat="server" Text="Occupation" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblFather" runat="server" Text="* Father :" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtFatherName" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator10" ControlToValidate="txtFatherName" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtFatherDOB" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtFatherDOB')" />
+                                    <%--<asp:RequiredFieldValidator ID="Validator11" ControlToValidate="txtFatherDOB" Text="!" Font-Bold="true" runat="server" />--%>
+                                    <asp:RangeValidator ID="rvFatherDOB" Type="Date" ControlToValidate="txtFatherDOB" runat="server" 
+                                        ErrorMessage="Invalid Date of Birth (Parents Particulars, Father)" Display="None" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtFatherEmployer" runat="server" Width="220px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator12" ControlToValidate="txtFatherEmployer" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtFatherOccupation" runat="server" Width="220px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator13" ControlToValidate="txtFatherOccupation" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblMother" runat="server" Text="* Mother :" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtMotherName" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator14" ControlToValidate="txtMotherName" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtMotherDOB" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtMotherDOB')" />
+                                    <%--<asp:RequiredFieldValidator ID="Validator15" ControlToValidate="txtMotherDOB" Text="!" Font-Bold="true" runat="server" />--%>
+                                    <asp:RangeValidator ID="rvMotherDOB" Type="Date" ControlToValidate="txtMotherDOB" runat="server"  
+                                        ErrorMessage="Invalid Date of Birth (Parents Particulars, Mother)" Display="None" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtMotherEmployer" runat="server" Width="220px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator16" ControlToValidate="txtMotherEmployer" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td>
+                                    <asp:TextBox ID="txtMotherOccupation" runat="server" Width="220px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator17" ControlToValidate="txtMotherOccupation" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblSiblingParticular" runat="server" CssClass="title_bgcolor" Text="SIBLING PARTICULARS" Width="100%" />
+                        <table class="table_style_sub" cellpadding="2" width="98%">
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvSibling" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvSibling_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlSibling" runat="server" DataSourceID="DS_Gender" DataTextField="Description"
+                                                        DataValueField="Description" AppendDataBoundItems="True">
+                                                        <asp:ListItem>Select Gender</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Name">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtSiblingName" runat="server" Width="180px" MaxLength="50" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Date of Birth">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtSiblingDOB" runat="server" Width="100px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtSiblingDOB").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvSiblingDOB" Type="Date" ControlToValidate="txtSiblingDOB" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-80).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Employer">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtSiblingEmployer" runat="server" Width="180px" MaxLength="50" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Occupation">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtSiblingOccupation" runat="server" Width="180px" MaxLength="50" />
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnSibling_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnSibling_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnSibling_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnSibling_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblEmergencyContact" runat="server" CssClass="title_bgcolor" Text="CONTACT - IN CASE OF EMERGENCY" Width="100%" />
+                        <table class="table_margin">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblContactPersonName" runat="server" Text="* Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtContactPersonName" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator18" ControlToValidate="txtContactPersonName" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblContactPersonRelationship" runat="server" Text="* Relationship :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtContactPersonRelationship" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator19" ControlToValidate="txtContactPersonRelationship" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblContactPersonNo" runat="server" Text="Contact No. # (Local) :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtContactPersonNo" runat="server" Width="120px" MaxLength="8" />
+                                    <asp:CustomValidator ID="CustomValidator16" ControlToValidate="txtContactPersonNo" 
+                                        ClientValidationFunction="checkContactPersonContactNo" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter Local or Overseas Contact No. (Contact in case of Emergency)" Display="None" />                                  
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator4" ControlToValidate="txtContactPersonNo" 
+                                        ErrorMessage="Please enter only Numbers & 8 digits starting with 6, 8 or 9 (Contact in case of Emergency, Contact No. (Local))" 
+                                        ValidationExpression="^[6-9]{1}\d{7}$" runat="server" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblContactPersonOverseasNo" runat="server" Text="# (Overseas) :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtContactPersonOverseasNo" runat="server" Width="120px" MaxLength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblContactPersonAddr" runat="server" Text="* Address :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtContactPersonAddr" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="40" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator21" ControlToValidate="txtContactPersonAddr" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="divNS" runat="server">
+                        <asp:Label ID="lblNS" runat="server" CssClass="title_bgcolor" Text="NATIONAL SERVICE" Width="100%" />
+                        <table class="table_margin">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblNSStatus" runat="server" Text="National Service Status :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:DropDownList ID="ddlNSStatus" runat="server" DataSourceID="DS_NSStatus" DataTextField="Description"
+                                        DataValueField="Description" AppendDataBoundItems="True">
+                                        <asp:ListItem>Select NS Status</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:CustomValidator ID="CustomValidator5" ControlToValidate="ddlNSStatus" 
+                                        ClientValidationFunction="checkNSStatus" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please select National Service Status" Display="None" />
+                                </td>
+                                <td style="width: 20%;">
+                                </td>
+                                <td style="width: 30%;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNSDateBegan" runat="server" Text="Date Began :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtNSDateBegan" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtNSDateBegan')" />
+                                    <asp:RangeValidator ID="rvNSDateBegan" Type="Date" ControlToValidate="txtNSDateBegan" runat="server" 
+                                        ErrorMessage="Invalid Date Began (National Service)" Display="None" />
+                                    <asp:CustomValidator ID="CustomValidator9" ControlToValidate="txtNSDateBegan" 
+                                        ClientValidationFunction="checkNSInfo" ValidateEmptyText="true" runat="server" 
+                                        ErrorMessage="Please enter National Service Information" Display="None" />
+                                </td>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNSRank" runat="server" Text="Rank :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtNSRank" runat="server" Width="180px" MaxLength="50" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNSDateCompletion" runat="server" Text="Date Completion :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtNSDateCompletion" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtNSDateCompletion')" />
+                                    <asp:RangeValidator ID="rvNSDateCompletion" Type="Date" ControlToValidate="txtNSDateCompletion" runat="server" 
+                                        ErrorMessage="Invalid Date Completion (National Service)" Display="None" />
+                                </td>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNSUnit" runat="server" Text="Unit :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtNSUnit" runat="server" Width="180px" MaxLength="50" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="50%">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblNSNext" runat="server" Text="Next Incamp Training (ICT)" BorderStyle="None" />
+                                </td>
+                                <td style="width: 30%;">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNSNextDate" runat="server" Text="Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtNSNextDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtNSNextDate')" />
+                                    <asp:RangeValidator ID="rvNSNextDate" Type="Date" ControlToValidate="txtNSNextDate" runat="server" 
+                                        ErrorMessage="Invalid Next Incamp Date (National Service)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblNSNextLength" runat="server" Text="Length :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtNSNextLength" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator10" ControlToValidate="txtNSNextLength" 
+                                        ErrorMessage="Please enter only Numbers (National Service, Length)" ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="Label2" runat="server" Text="(weeks)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <table class="table_margin">
+                            <tr>
+                                <td class="FieldNameCenter">
+                                    <asp:Button ID="btnPersonalInfo_Next" CssClass="button" runat="server" Text="Next" OnClick="btnEducationQualification_Click" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divEducationQualification" class="div_style" runat="server">
+            <table class="table_style" cellpadding="0">
+                <tr>
+                    <td>
+                        <asp:Label ID="lblEducation" runat="server" CssClass="title_bgcolor" Text="EDUCATION" Width="100%" />                        
+                        <table class="table_style_sub" cellpadding="2" width="98%">
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvEducation" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvEducation_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="* Qualification Attained">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtEducationAttained" runat="server" Width="180px" MaxLength="100" />
+                                                    <asp:RequiredFieldValidator ID="Validator109" ControlToValidate="txtEducationAttained" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="* Name of School">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtEducationSchoolName" runat="server" Width="180px" MaxLength="100" />
+                                                    <asp:RequiredFieldValidator ID="Validator110" ControlToValidate="txtEducationSchoolName" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>                                            
+                                            <asp:TemplateField HeaderText="* Start Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtEducationStartDate" runat="server" Width="100px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtEducationStartDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvEducationStartDate" Type="Date" ControlToValidate="txtEducationStartDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                    <asp:RequiredFieldValidator ID="Validator111" ControlToValidate="txtEducationStartDate" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="* End Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtEducationEndDate" runat="server" Width="100px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtEducationEndDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvEducationEndDate" Type="Date" ControlToValidate="txtEducationEndDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                    <asp:RequiredFieldValidator ID="Validator112" ControlToValidate="txtEducationEndDate" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>                                                
+                                            </asp:TemplateField>                                            
+                                            <asp:TemplateField HeaderText="* Course / Major">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtEducationMajor" runat="server" Width="180px" MaxLength="50" />
+                                                    <asp:RequiredFieldValidator ID="Validator113" ControlToValidate="txtEducationMajor" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnEducation_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnEducation_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnEducation_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnEducation_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblCourse" runat="server" CssClass="title_bgcolor" Text="VOCATIONAL / TRAINING COURSES" Width="100%" />
+                        <table class="table_style_sub" cellpadding="2" width="98%">
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvCourse" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvCourse_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Name of School">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCourseSchoolName" runat="server" Width="180px" MaxLength="100" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Course Title">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCourseTitle" runat="server" Width="180px" MaxLength="100" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Start Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCourseStartDate" runat="server" Width="100px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtCourseStartDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvCourseStartDate" Type="Date" ControlToValidate="txtCourseStartDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="End Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCourseEndDate" runat="server" Width="100px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtCourseEndDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvCourseEndDate" Type="Date" ControlToValidate="txtCourseEndDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnCourse_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnCourse_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnCourse_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnCourse_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblCertificate" runat="server" CssClass="title_bgcolor" Text="CERTIFICATIONS" Width="100%" />
+                        <table class="table_style_sub" cellpadding="2" width="98%">
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvCertificate" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvCertificate_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Name of Institution">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCertificateSchoolName" runat="server" Width="160px" MaxLength="100" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Certificate Title">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCertificateTitle" runat="server" Width="160px" MaxLength="100" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Start Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCertificateStartDate" runat="server" Width="80px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtCertificateStartDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvCertificateStartDate" Type="Date" ControlToValidate="txtCertificateStartDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="End Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCertificateEndDate" runat="server" Width="80px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtCertificateEndDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvCertificateEndDate" Type="Date" ControlToValidate="txtCertificateEndDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Certification Date">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCertificateDate" runat="server" Width="80px" MaxLength="10" />
+                                                    <img src="Images/calendar.png" alt="Picture" 
+                                                        onclick="PopupDatePicker('<%# ((GridViewRow)Container).FindControl("txtCertificateDate").ClientID %>')" />
+                                                    <asp:RangeValidator ID="rvCertificateDate" Type="Date" ControlToValidate="txtCertificateDate" runat="server" 
+                                                        MaximumValue='<%# DateTime.Today.AddYears(1).ToShortDateString() %>' 
+                                                        MinimumValue='<%# DateTime.Today.AddYears(-60).ToShortDateString() %>' 
+                                                        Text="!" Font-Bold="true" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="Certification Earned">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtCertificateEarned" runat="server" Width="160px" MaxLength="100" />
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnCertificate_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnCertificate_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnCertificate_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnCertificate_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblITKnowledge" runat="server" CssClass="title_bgcolor" Text="IT COMPETENCY / KNOWLEDGE" Width="100%" />
+                        <table class="table_style_sub" cellpadding="2" width="98%"><tr><td> 
+                        <table class="table_margin">
+                            <tr>
+                                <td class="FieldNameCenter" style="width: 30%;">
+                                    <asp:Label ID="lblSoftwareName" runat="server" Text="Software Name" />                                    
+                                </td>   
+                                <td class="td_left" style="font-weight:bold;">
+                                    <asp:Label ID="lblProficiency" runat="server" Text="Proficiency" />
+                                </td>                           
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblMSWord" runat="server" Text="* Microsoft Word :" />                                    
+                                </td>   
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlMSWord" runat="server" AppendDataBoundItems="True"
+                                        DataSourceID="DS_ITKnowledge" DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator53" ControlToValidate="ddlMSWord" 
+                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                </td>                           
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblMSExcel" runat="server" Text="* Microsoft Excel :" />                                    
+                                </td>   
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlMSExcel" runat="server" AppendDataBoundItems="True"
+                                        DataSourceID="DS_ITKnowledge" DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator54" ControlToValidate="ddlMSExcel" 
+                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                </td>                           
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblMSPowerpoint" runat="server" Text="* Microsoft Powerpoint :" />                                    
+                                </td>   
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlMSPowerpoint" runat="server" AppendDataBoundItems="True"
+                                        DataSourceID="DS_ITKnowledge" DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator55" ControlToValidate="ddlMSPowerpoint" 
+                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                </td>                           
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblInternet" runat="server" Text="* Internet :" />                                    
+                                </td>   
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlInternet" runat="server" AppendDataBoundItems="True"
+                                        DataSourceID="DS_ITKnowledge" DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator56" ControlToValidate="ddlInternet" 
+                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                </td>                           
+                            </tr>
+                        </table>
+                        <table class="table_margin">                         
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvITKnowledge" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvITKnowledge_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="Additional Software Skills (if any)" HeaderStyle-HorizontalAlign="Left">
+                                                <ItemTemplate>
+                                                    <asp:TextBox ID="txtSoftwareName" runat="server" Width="280px" MaxLength="100" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlITKnowledge" runat="server" AppendDataBoundItems="True"
+                                                        DataSourceID="DS_ITKnowledge" DataTextField="Description" DataValueField="Description">
+                                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnITKnowledge_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnITKnowledge_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnITKnowledge_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnITKnowledge_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        </td></tr></table>
+                        <table class="table_style_sub" cellpadding="2" width="25%">
+                            <tr>
+                                <td class="FieldNameCenter" style="width: 40%;">
+                                    <asp:Label ID="lblTypingSkill" runat="server" Text="Typing Skills" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:TextBox ID="txtWordsPerMins" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator5" ControlToValidate="txtWordsPerMins" 
+                                        ErrorMessage="Please enter only Numbers (Typing Skills)" ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="lblWordsPerMins" runat="server" Text="(Words Per Minute)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_margin">
+                            <tr>
+                                <td class="FieldNameCenter">
+                                    <asp:Button ID="btnEducation_Previous" CssClass="button" runat="server" Text="Previous" OnClick="btnPersonalInformation_Click" CausesValidation="false" />
+                                    <asp:Button ID="btnEducation_Next" CssClass="button" runat="server" Text="Next" OnClick="btnWorkExperience_Click" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divWorkExperience" class="div_style" runat="server">            
+            <table class="table_style" cellpadding="0">
+                <tr>
+                    <td>
+                        <asp:Label ID="lblWorkExperience" runat="server" CssClass="title_bgcolor" Text="WORK EXPERIENCE" Width="100%" />
+                        <table class="title_style_sub">
+                            <tr>
+                                <td class="td_right" style="width: 25%;">
+                                    <asp:Label ID="lblTotalWorkExperience" runat="server" Text="* Total No. of Work Experience :" />
+                                </td>
+                                <td class="td_left" style="width: 15%;">
+                                    <asp:DropDownList ID="ddlTotalWorkExperience" runat="server" AppendDataBoundItems="True"
+                                        DataSourceID="DS_WorkExperience" DataTextField="Description" DataValueField="Description" 
+                                        AutoPostBack="true" OnSelectedIndexChanged="ddlTotalWorkExperience_SelectedIndexChanged">
+                                        <asp:ListItem>Select Option</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator57" ControlToValidate="ddlTotalWorkExperience" 
+                                        InitialValue="Select Option" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:CheckBox ID="chkCurrentWorking" runat="server" Visible="false" />
+                                    <asp:Label ID="lblCurrentWorking" runat="server" Text="Currently Working" Visible="false" />
+                                </td>
+                            </tr>
+                        </table>
+                        <div id="divInstruction" runat="server">
+                        <table class="title_style_sub">                            
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblInstruction" runat="server" Text="Please fill up in reverse chronological order / starting with most recent." ForeColor="#B73C00" />
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div id="divWorkExperience1" runat="server">
+                        <table class="title_style_sub">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblWorkExperience1" runat="server" Text="Work Experience 1" Font-Bold="True" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="70%">
+                            <tr>
+                                <td class="td_right" style="width: 30%;">
+                                    <asp:Label ID="lblStartDate1" runat="server" Text="Start Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtStartDate1" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtStartDate1')" />
+                                    <asp:RequiredFieldValidator ID="Validator58" ControlToValidate="txtStartDate1" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvStartDate1" Type="Date" ControlToValidate="txtStartDate1" runat="server" 
+                                        ErrorMessage="Invalid Start Date (Work Experience 1)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEndDate1" runat="server" Text="End Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEndDate1" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtEndDate1')" />
+                                    <asp:CustomValidator ID="CustomValidator15" ControlToValidate="txtEndDate1" Text="!" Font-Bold="true" 
+                                        ClientValidationFunction="checkEndDate" ValidateEmptyText="true" runat="server" Display="Dynamic" /> 
+                                    <asp:RangeValidator ID="rvEndDate1" Type="Date" ControlToValidate="txtEndDate1" runat="server" 
+                                        ErrorMessage="Invalid End Date (Work Experience 1)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEmployer1" runat="server" Text="Name of Employer :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEmployer1" runat="server" Width="180px" MaxLength="100" />
+                                    <asp:RequiredFieldValidator ID="Validator60" ControlToValidate="txtEmployer1" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblLocation1" runat="server" Text="Location :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLocation1" runat="server" Width="180px" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator61" ControlToValidate="txtLocation1" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblPosition1" runat="server" Text="Position :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtPosition1" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator62" ControlToValidate="txtPosition1" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblJobScope1" runat="server" Text="Job Scope :" />
+                                </td>
+                                <td class="td_left">
+                                    <%--<textarea id="txtJobScope1" rows="3" cols="40"></textarea>--%>
+                                    <asp:TextBox ID="txtJobScope1" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator63" ControlToValidate="txtJobScope1" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblJobType1" runat="server" Text="Job Type :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlJobType1" runat="server" AppendDataBoundItems="True" DataSourceID="DS_JobType"
+                                        DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Job Type</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator64" ControlToValidate="ddlJobType1" 
+                                        InitialValue="Select Job Type" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblWorkHour1" runat="server" Text="Working Hours :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtWorkHour1" runat="server" Width="140px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator65" ControlToValidate="txtWorkHour1" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblSalaryDrawn1" runat="server" Text="Salary Drawn :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSalaryDrawn1" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RequiredFieldValidator ID="Validator66" ControlToValidate="txtSalaryDrawn1" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator6" ControlToValidate="txtSalaryDrawn1" 
+                                        ErrorMessage="Please enter only Numbers (Work Experience 1, Salary Drawn)" 
+                                        ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="lblSalaryDrawnCurrency1" runat="server" Text="(SGD)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblLeavingReason1" runat="server" Text="Reason for Leaving :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLeavingReason1" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator67" ControlToValidate="txtLeavingReason1" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceInfo1" runat="server" Text="Reference Information :" />
+                                </td>
+                                <td class="td_left">
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceName1" runat="server" Text="Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceName1" runat="server" Width="180px" MaxLength="50" />                                   
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceDesignation1" runat="server" Text="Designation :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceDesignation1" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceContactNo1" runat="server" Text="Contact No. :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceContactNo1" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceEmail1" runat="server" Text="Email :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceEmail1" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator12" ControlToValidate="txtReferenceEmail1" 
+                                        ValidationExpression="([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})" 
+                                        ErrorMessage="Invalid Email Address (Work Experience 1)" runat="server" Display="None" />                                    
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div id="divWorkExperience2" runat="server">
+                        <table class="title_style_sub">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblWorkExperience2" runat="server" Text="Work Experience 2" Font-Bold="True" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="70%">
+                            <tr>
+                                <td class="td_right" style="width: 30%">
+                                    <asp:Label ID="lblStartDate2" runat="server" Text="Start Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtStartDate2" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtStartDate2')" />
+                                    <asp:RequiredFieldValidator ID="Validator68" ControlToValidate="txtStartDate2" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvStartDate2" Type="Date" ControlToValidate="txtStartDate2" runat="server" 
+                                        ErrorMessage="Invalid Start Date (Work Experience 2)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEndDate2" runat="server" Text="End Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEndDate2" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtEndDate2')" />
+                                    <asp:RequiredFieldValidator ID="Validator69" ControlToValidate="txtEndDate2" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvEndDate2" Type="Date" ControlToValidate="txtEndDate2" runat="server" 
+                                        ErrorMessage="Invalid End Date (Work Experience 2)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEmployer2" runat="server" Text="Name of Employer :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEmployer2" runat="server" Width="180px" MaxLength="100" />
+                                    <asp:RequiredFieldValidator ID="Validator70" ControlToValidate="txtEmployer2" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblLocation2" runat="server" Text="Location :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLocation2" runat="server" Width="180px" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator71" ControlToValidate="txtLocation2" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblPosition2" runat="server" Text="Position :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtPosition2" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator72" ControlToValidate="txtPosition2" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblJobScope2" runat="server" Text="Job Scope :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtJobScope2" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator73" ControlToValidate="txtJobScope2" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblJobType2" runat="server" Text="Job Type :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlJobType2" runat="server" AppendDataBoundItems="True" DataSourceID="DS_JobType"
+                                        DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Job Type</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator74" ControlToValidate="ddlJobType2" 
+                                        InitialValue="Select Job Type" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblWorkHour2" runat="server" Text="Working Hours :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtWorkHour2" runat="server" Width="140px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator75" ControlToValidate="txtWorkHour2" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblSalaryDrawn2" runat="server" Text="Salary Drawn :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSalaryDrawn2" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RequiredFieldValidator ID="Validator76" ControlToValidate="txtSalaryDrawn2" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator7" ControlToValidate="txtSalaryDrawn2" 
+                                        ErrorMessage="Please enter only Numbers (Work Experience 2, Salary Drawn)" 
+                                        ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="lblSalaryDrawnCurrency2" runat="server" Text="(SGD)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblLeavingReason2" runat="server" Text="Reason for Leaving :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLeavingReason2" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator77" ControlToValidate="txtLeavingReason2" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceInfo2" runat="server" Text="Reference Information :" />
+                                </td>
+                                <td class="td_left">
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceName2" runat="server" Text="Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceName2" runat="server" Width="180px" MaxLength="50" />                                   
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceDesignation2" runat="server" Text="Designation :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceDesignation2" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceContactNo2" runat="server" Text="Contact No. :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceContactNo2" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceEmail2" runat="server" Text="Email :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceEmail2" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator13" ControlToValidate="txtReferenceEmail2" 
+                                        ValidationExpression="([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})" 
+                                        ErrorMessage="Invalid Email Address (Work Experience 2)" runat="server" Display="None" />                                    
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div id="divWorkExperience3" runat="server">
+                        <table class="title_style_sub">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblWorkExperience3" runat="server" Text="Work Experience 3" Font-Bold="True" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="70%">
+                            <tr>
+                                <td class="td_right" style="width: 30%">
+                                    <asp:Label ID="lblStartDate3" runat="server" Text="Start Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtStartDate3" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtStartDate3')" />
+                                    <asp:RequiredFieldValidator ID="Validator78" ControlToValidate="txtStartDate3" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvStartDate3" Type="Date" ControlToValidate="txtStartDate3" runat="server" 
+                                        ErrorMessage="Invalid Start Date (Work Experience 3)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEndDate3" runat="server" Text="End Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEndDate3" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtEndDate3')" />
+                                    <asp:RequiredFieldValidator ID="Validator79" ControlToValidate="txtEndDate3" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvEndDate3" Type="Date" ControlToValidate="txtEndDate3" runat="server" 
+                                        ErrorMessage="Invalid End Date (Work Experience 3)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEmployer3" runat="server" Text="Name of Employer :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEmployer3" runat="server" Width="180px" MaxLength="100" />
+                                    <asp:RequiredFieldValidator ID="Validator80" ControlToValidate="txtEmployer3" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblLocation3" runat="server" Text="Location :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLocation3" runat="server" Width="180px" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator81" ControlToValidate="txtLocation3" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblPosition3" runat="server" Text="Position :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtPosition3" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator82" ControlToValidate="txtPosition3" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblJobScope3" runat="server" Text="Job Scope :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtJobScope3" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator83" ControlToValidate="txtJobScope3" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblJobType3" runat="server" Text="Job Type :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlJobType3" runat="server" AppendDataBoundItems="True" DataSourceID="DS_JobType"
+                                        DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Job Type</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator84" ControlToValidate="ddlJobType3" 
+                                        InitialValue="Select Job Type" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblWorkHour3" runat="server" Text="Working Hours :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtWorkHour3" runat="server" Width="140px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator85" ControlToValidate="txtWorkHour3" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblSalaryDrawn3" runat="server" Text="Salary Drawn :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSalaryDrawn3" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RequiredFieldValidator ID="Validator86" ControlToValidate="txtSalaryDrawn3" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator8" ControlToValidate="txtSalaryDrawn3" 
+                                        ErrorMessage="Please enter only Numbers (Work Experience 3, Salary Drawn)" 
+                                        ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="lblSalaryDrawnCurrency3" runat="server" Text="(SGD)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblLeavingReason3" runat="server" Text="Reason for Leaving :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLeavingReason3" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator87" ControlToValidate="txtLeavingReason3" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceInfo3" runat="server" Text="Reference Information :" />
+                                </td>
+                                <td class="td_left">
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceName3" runat="server" Text="Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceName3" runat="server" Width="180px" MaxLength="50" />                                   
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceDesignation3" runat="server" Text="Designation :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceDesignation3" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceContactNo3" runat="server" Text="Contact No. :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceContactNo3" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceEmail3" runat="server" Text="Email :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceEmail3" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator14" ControlToValidate="txtReferenceEmail3" 
+                                        ValidationExpression="([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})" 
+                                        ErrorMessage="Invalid Email Address (Work Experience 3)" runat="server" Display="None" />                                    
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div id="divWorkExperience4" runat="server">
+                        <table class="title_style_sub">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblWorkExperience4" runat="server" Text="Work Experience 4" Font-Bold="True" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="70%">
+                            <tr>
+                                <td class="td_right" style="width: 30%">
+                                    <asp:Label ID="lblStartDate4" runat="server" Text="Start Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtStartDate4" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtStartDate4')" />
+                                    <asp:RequiredFieldValidator ID="Validator88" ControlToValidate="txtStartDate4" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvStartDate4" Type="Date" ControlToValidate="txtStartDate4" runat="server" 
+                                        ErrorMessage="Invalid Start Date (Work Experience 4)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEndDate4" runat="server" Text="End Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEndDate4" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtEndDate4')" />
+                                    <asp:RequiredFieldValidator ID="Validator89" ControlToValidate="txtEndDate4" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RangeValidator ID="rvEndDate4" Type="Date" ControlToValidate="txtEndDate4" runat="server" 
+                                        ErrorMessage="Invalid End Date (Work Experience 4)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEmployer4" runat="server" Text="Name of Employer :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEmployer4" runat="server" Width="180px" MaxLength="100" />
+                                    <asp:RequiredFieldValidator ID="Validator90" ControlToValidate="txtEmployer4" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblLocation4" runat="server" Text="Location :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLocation4" runat="server" Width="180px" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator91" ControlToValidate="txtLocation4" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblPosition4" runat="server" Text="Position :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtPosition4" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator92" ControlToValidate="txtPosition4" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblJobScope4" runat="server" Text="Job Scope :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtJobScope4" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator93" ControlToValidate="txtJobScope4" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblJobType4" runat="server" Text="Job Type :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlJobType4" runat="server" AppendDataBoundItems="True" DataSourceID="DS_JobType"
+                                        DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Job Type</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator94" ControlToValidate="ddlJobType4" 
+                                        InitialValue="Select Job Type" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblWorkHour4" runat="server" Text="Working Hours :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtWorkHour4" runat="server" Width="140px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator95" ControlToValidate="txtWorkHour4" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblSalaryDrawn4" runat="server" Text="Salary Drawn :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSalaryDrawn4" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RequiredFieldValidator ID="Validator96" ControlToValidate="txtSalaryDrawn4" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator9" ControlToValidate="txtSalaryDrawn4" 
+                                        ErrorMessage="Please enter only Numbers (Work Experience 4, Salary Drawn)" 
+                                        ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="lblSalaryDrawnCurrency4" runat="server" Text="(SGD)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblLeavingReason4" runat="server" Text="Reason for Leaving :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLeavingReason4" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator97" ControlToValidate="txtLeavingReason4" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceInfo4" runat="server" Text="Reference Information :" />
+                                </td>
+                                <td class="td_left">
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceName4" runat="server" Text="Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceName4" runat="server" Width="180px" MaxLength="50" />                                   
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceDesignation4" runat="server" Text="Designation :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceDesignation4" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceContactNo4" runat="server" Text="Contact No. :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceContactNo4" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceEmail4" runat="server" Text="Email :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceEmail4" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator15" ControlToValidate="txtReferenceEmail4" 
+                                        ValidationExpression="([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})" 
+                                        ErrorMessage="Invalid Email Address (Work Experience 4)" runat="server" Display="None" />                                    
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <div id="divWorkExperience5" runat="server">
+                        <table class="title_style_sub">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblWorkExperience5" runat="server" Text="Work Experience 5" Font-Bold="True" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="70%">
+                            <tr>
+                                <td class="td_right" style="width: 30%">
+                                    <asp:Label ID="lblStartDate5" runat="server" Text="Start Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtStartDate5" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtStartDate5')" />
+                                    <asp:RequiredFieldValidator ID="Validator98" ControlToValidate="txtStartDate5" Text="!" Font-Bold="true" runat="server" />                                    
+                                    <asp:RangeValidator ID="rvStartDate5" Type="Date" ControlToValidate="txtStartDate5" runat="server" 
+                                        ErrorMessage="Invalid Start Date (Work Experience 5)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEndDate5" runat="server" Text="End Date :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEndDate5" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtEndDate5')" />
+                                    <asp:RequiredFieldValidator ID="Validator99" ControlToValidate="txtEndDate5" Text="!" Font-Bold="true" runat="server" />                                    
+                                    <asp:RangeValidator ID="rvEndDate5" Type="Date" ControlToValidate="txtEndDate5" runat="server" 
+                                        ErrorMessage="Invalid End Date (Work Experience 5)" Display="None" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblEmployer5" runat="server" Text="Name of Employer :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtEmployer5" runat="server" Width="180px" MaxLength="100" />
+                                    <asp:RequiredFieldValidator ID="Validator100" ControlToValidate="txtEmployer5" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblLocation5" runat="server" Text="Location :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLocation5" runat="server" Width="180px" MaxLength="200" />
+                                    <asp:RequiredFieldValidator ID="Validator101" ControlToValidate="txtLocation5" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblPosition5" runat="server" Text="Position :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtPosition5" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator102" ControlToValidate="txtPosition5" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblJobScope5" runat="server" Text="Job Scope :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtJobScope5" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator103" ControlToValidate="txtJobScope5" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblJobType5" runat="server" Text="Job Type :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:DropDownList ID="ddlJobType5" runat="server" AppendDataBoundItems="True" DataSourceID="DS_JobType"
+                                        DataTextField="Description" DataValueField="Description">
+                                        <asp:ListItem>Select Job Type</asp:ListItem>
+                                    </asp:DropDownList>
+                                    <asp:RequiredFieldValidator ID="Validator104" ControlToValidate="ddlJobType5" 
+                                        InitialValue="Select Job Type" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblWorkHour5" runat="server" Text="Working Hours :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtWorkHour5" runat="server" Width="140px" MaxLength="50" />
+                                    <asp:RequiredFieldValidator ID="Validator105" ControlToValidate="txtWorkHour5" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblSalaryDrawn5" runat="server" Text="Salary Drawn :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtSalaryDrawn5" runat="server" Width="100px" MaxLength="5" />
+                                    <asp:RequiredFieldValidator ID="Validator106" ControlToValidate="txtSalaryDrawn5" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator11" ControlToValidate="txtSalaryDrawn5" 
+                                        ErrorMessage="Please enter only Numbers (Work Experience 5, Salary Drawn)" 
+                                        ValidationExpression="^\d{0,5}$" runat="server" Display="None" />
+                                    <asp:Label ID="lblSalaryDrawnCurrency5" runat="server" Text="(SGD)" Font-Size="Small" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right_top">
+                                    <asp:Label ID="lblLeavingReason5" runat="server" Text="Reason for Leaving :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLeavingReason5" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" MaxLength="500" />
+                                    <asp:RequiredFieldValidator ID="Validator107" ControlToValidate="txtLeavingReason5" Text="!" Font-Bold="true" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceInfo5" runat="server" Text="Reference Information :" />
+                                </td>
+                                <td class="td_left">
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceName5" runat="server" Text="Name :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceName5" runat="server" Width="180px" MaxLength="50" />                                   
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceDesignation5" runat="server" Text="Designation :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceDesignation5" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceContactNo5" runat="server" Text="Contact No. :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceContactNo5" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>                                
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblReferenceEmail5" runat="server" Text="Email :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtReferenceEmail5" runat="server" Width="180px" MaxLength="50" />
+                                    <asp:RegularExpressionValidator ID="RegularExpressionValidator16" ControlToValidate="txtReferenceEmail5" 
+                                        ValidationExpression="([a-zA-Z0-9_\-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([a-zA-Z0-9\-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})" 
+                                        ErrorMessage="Invalid Email Address (Work Experience 5)" runat="server" Display="None" />                                    
+                                </td>
+                            </tr>
+                        </table>
+                        </div>
+                        <table class="table_margin">
+                            <tr>
+                                <td class="FieldNameCenter">
+                                    <asp:Button ID="btnExperience_Previous" CssClass="button" runat="server" Text="Previous" OnClick="btnEducationQualification_Click" CausesValidation="false" />
+                                    <asp:Button ID="btnExperience_Next" CssClass="button" runat="server" Text="Next" OnClick="btnLanguage_Click" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divLanguage" class="div_style" runat="server">
+            <table class="table_style" cellpadding="0">
+                <tr>
+                    <td>
+                        <asp:Label ID="lblLanguage" runat="server" CssClass="title_bgcolor" Text="LANGUAGES" Width="100%" />
+                        <table class="title_style_sub">
+                            <tr>
+                                <td>
+                                    <asp:Label ID="Label6" runat="server" Text="Please select at least one language and corresponding proficiencies." ForeColor="#B73C00" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblLanguageDupMsg" runat="server" ForeColor="Red" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <asp:Label ID="lblProficiencyMsg" runat="server" ForeColor="Red" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="30%">                            
+                            <tr>
+                                <td>
+                                    <asp:GridView ID="gvLanguage" runat="server" ShowFooter="true" AutoGenerateColumns="false" OnRowCreated="gvLanguage_RowCreated" GridLines="None">
+                                        <Columns>
+                                            <asp:TemplateField HeaderText="* Language">
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlLanguage" runat="server" AppendDataBoundItems="True"
+                                                        DataSourceID="DS_Language" DataTextField="Description" DataValueField="Description">
+                                                        <asp:ListItem>Select Language</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                    <asp:RequiredFieldValidator ID="Validator34" ControlToValidate="ddlLanguage" 
+                                                        InitialValue="Select Language" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="* Spoken">
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlSpokenSkill" runat="server" AppendDataBoundItems="True"
+                                                        DataSourceID="DS_LanguageSkill" DataTextField="Description" DataValueField="Description">
+                                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                    <asp:RequiredFieldValidator ID="Validator35" ControlToValidate="ddlSpokenSkill" 
+                                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="* Written">
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlWrittenSkill" runat="server" AppendDataBoundItems="True"
+                                                        DataSourceID="DS_LanguageSkill" DataTextField="Description" DataValueField="Description">
+                                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                    <asp:RequiredFieldValidator ID="Validator36" ControlToValidate="ddlWrittenSkill" 
+                                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField HeaderText="* Reading">
+                                                <ItemTemplate>
+                                                    <asp:DropDownList ID="ddlReadingSkill" runat="server" AppendDataBoundItems="True"
+                                                        DataSourceID="DS_LanguageSkill" DataTextField="Description" DataValueField="Description">
+                                                        <asp:ListItem>Select Proficiency</asp:ListItem>
+                                                    </asp:DropDownList>
+                                                    <asp:RequiredFieldValidator ID="Validator37" ControlToValidate="ddlReadingSkill" 
+                                                        InitialValue="Select Proficiency" Text="!" Font-Bold="true" runat="server" />
+                                                </ItemTemplate>
+                                                <FooterStyle HorizontalAlign="Right" />
+                                                <FooterTemplate>
+                                                    <asp:Button ID="btnLanguage_RowAdded" runat="server" Text="Add New Row" 
+                                                        OnClick="btnLanguage_RowAdded_Click" CausesValidation="false" />
+                                                </FooterTemplate>
+                                            </asp:TemplateField>
+                                            <asp:TemplateField>
+                                                <ItemTemplate>
+                                                    <asp:LinkButton ID="lbtnLanguage_RowRemoved" runat="server" Text="Remove"
+                                                        OnClick="lbtnLanguage_RowRemoved_Click" CausesValidation="false" />
+                                                </ItemTemplate>
+                                            </asp:TemplateField>
+                                        </Columns>
+                                    </asp:GridView>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="title_style_sub">
+                            <tr>
+                                <td class="td_left">
+                                    <asp:Label ID="lblLanguagesOth" runat="server" Text="Additional Language Skills (if any)" Font-Bold="true" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtLanguagesOth" runat="server" Width="280px" MaxLength="100" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_margin">
+                            <tr>
+                                <td class="FieldNameCenter">
+                                    <asp:Button ID="btnLanguage_Previous" CssClass="button" runat="server" Text="Previous" OnClick="btnWorkExperience_Click" CausesValidation="false" />
+                                    <asp:Button ID="btnLanguage_Next" CssClass="button" runat="server" Text="Next" OnClick="btnDeclaration_Click" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        <div id="divDeclaration" class="div_style" runat="server">
+            <table class="table_style" cellpadding="0">
+                <tr>
+                    <td>
+                        <table class="table_margin">                            
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblPhotoUpload" runat="server" Text="Photo Upload :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:FileUpload ID="filUploadPhoto" runat="server" Width="250px" />
+                                    <asp:LinkButton ID="btnUploadPhoto" Text="Upload" runat="server" OnClick="btnUploadPhoto_Click" CausesValidation="false" />
+                                    <%--<asp:RegularExpressionValidator ID="REValidator3" runat="server" ErrorMessage="Only bmp, gif, jpg, jpeg, png files are allowed!"
+                                        ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.bmp|.gif|.jpg|.jpeg|.png)$"
+                                        ControlToValidate="filUploadPhoto" />--%>
+                                    <asp:CheckBox ID="chkUploadPhoto" runat="server" Visible="false" />
+                                    <asp:Label ID="lblUploadPhoto" runat="server" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="td_left">
+                                    <asp:Label ID="lblPhotoUploadMsg" runat="server" ForeColor="#B73C00"
+                                        Text="Only .bmp, .gif, .jpg, .jpeg, .png file types are acceptable and the file should not exceed 150 kb!" />
+                                    <br /><asp:Label ID="Label7" runat="server" ForeColor="#B73C00" Text="Image should be within 400 by 514 pixels!" />
+                                    <br /><asp:Label ID="lblPhotoUploadErrMsg" runat="server" ForeColor="Red" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_right">
+                                    <asp:Label ID="lblResumeUpload" runat="server" Text="Resume Upload :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:FileUpload ID="filUploadResume" runat="server" Width="250px" />
+                                    <asp:LinkButton ID="btnUploadResume" Text="Upload" runat="server" OnClick="btnUploadResume_Click" CausesValidation="false" />
+                                    <%--<asp:RegularExpressionValidator ID="REValidator4" runat="server" ErrorMessage="Only doc, docx, pdf files are allowed!"
+                                        ValidationExpression="^(([a-zA-Z]:)|(\\{2}\w+)\$?)(\\(\w[\w].*))+(.doc|.docx|.pdf)$"
+                                        ControlToValidate="filUploadResume" />--%>
+                                    <asp:CheckBox ID="chkUploadResume" runat="server" Visible="false" />
+                                    <asp:Label ID="lblUploadResume" runat="server" />
+                                 </td>
+                            </tr>
+                            <tr>
+                                <td>
+                                </td>
+                                <td class="td_left">
+                                    <asp:Label ID="lblResumeUploadMsg" runat="server" ForeColor="#B73C00"
+                                        Text="Only .doc, .docx, .xls, .xlsx, .pdf file types are acceptable and the file should not exceed 500 kb!" />
+                                    <br /><asp:Label ID="lblResumeUploadErrMsg" runat="server" ForeColor="Red" />
+                                </td>
+                            </tr>
+                        </table>
+                        <asp:Label ID="lblDeclaration" runat="server" CssClass="title_bgcolor" Text="DECLARATION" Width="100%" />
+                        <table class="table_style_declaration">
+                            <tr>
+                                <td class="td_left" style="width: 50%;">
+                                    <asp:RequiredFieldValidator ID="Validator42" ControlToValidate="rdListKnownStaff" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblKnownStaff" runat="server" Text="* Do you know any staff working in Tele-centre Services Pte Ltd? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListKnownStaff" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:Label ID="lblKnownStaffYes" runat="server" Text="(If Yes, please indicate below) :" />
+                                </td>
+                            </tr>                           
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="60%">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblStaffName" runat="server" Text="Full Name :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtStaffName" runat="server" Width="180px" MaxLength="50" />                                    
+                                    <asp:CustomValidator ID="CustomValidator6" ClientValidationFunction="checkStaffInfo" runat="server" 
+                                        ErrorMessage="Please enter Full Name and Relationship" Display="None" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblStaffRelationship" runat="server" Text="Relationship :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtStaffRelationship" runat="server" Width="180px" MaxLength="50" />                                    
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_declaration">
+                            <tr>
+                                <td class="td_left" style="width: 50%;">
+                                    <asp:RequiredFieldValidator ID="Validator43" ControlToValidate="rdListWorkTeleCentreBefore" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblWorkTeleCentreBefore" runat="server" Text="* Have you worked with Tele-centre before? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListWorkTeleCentreBefore" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:Label ID="lblWorkBeforeYes" runat="server" Text="(If Yes, please indicate below) :" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="90%">
+                            <tr>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblTCStartDate" runat="server" Text="Start Date :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtTCStartDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtTCStartDate')" />                                
+                                    <asp:RangeValidator ID="rvTCStartDate" Type="Date" ControlToValidate="txtTCStartDate" runat="server"   
+                                        ErrorMessage="Invalid Start Date" Display="None" />
+                                    <asp:CustomValidator ID="CustomValidator10" ClientValidationFunction="checkDateInfo" runat="server" 
+                                        ErrorMessage="Please enter Start Date, End Date and Position" Display="None" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblTCEndDate" runat="server" Text="End Date :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtTCEndDate" runat="server" Width="100px" MaxLength="10" />
+                                    <img src="Images/calendar.png" alt="Picture" onclick="PopupDatePicker('txtTCEndDate')" /> 
+                                    <asp:RangeValidator ID="rvTCEndDate" Type="Date" ControlToValidate="txtTCEndDate" runat="server"   
+                                        ErrorMessage="Invalid End Date" Display="None" />
+                                </td>
+                                <td class="td_right" style="width: 20%;">
+                                    <asp:Label ID="lblTCPosition" runat="server" Text="Position :" />
+                                </td>
+                                <td class="td_left" style="width: 30%;">
+                                    <asp:TextBox ID="txtTCPosition" runat="server" Width="180px" MaxLength="50" />                              
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_declaration">
+                            <tr>
+                                <td class="td_left" style="width: 50%;">
+                                    <asp:RequiredFieldValidator ID="Validator44" ControlToValidate="rdListPhysicalImpairment" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblPhysicalImpairment" runat="server" Text="* Have you been or are suffering from any physical impairment? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListPhysicalImpairment" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:RequiredFieldValidator ID="Validator45" ControlToValidate="rdListMajorDiseaseIllness" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblMajorDiseaseIllness" runat="server" Text="* Have you been or are suffering from any major disease or illness? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListMajorDiseaseIllness" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:RequiredFieldValidator ID="Validator46" ControlToValidate="rdListMinorDiseaseIllness" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblMinorDiseaseIllness" runat="server" Text="* Have you been or are suffering from any minor disease or illness? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListMinorDiseaseIllness" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:RequiredFieldValidator ID="Validator47" ControlToValidate="rdListLongtermMedication" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblLongtermMedication" runat="server" Text="* Have you been or are on long term medication? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListLongtermMedication" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:RequiredFieldValidator ID="Validator48" ControlToValidate="rdListBankruptcyStatus" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblBankruptcyStatus" runat="server" Text="* Have you been or are on bankruptcy status? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListBankruptcyStatus" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:RequiredFieldValidator ID="Validator49" ControlToValidate="rdListConvictedOffence" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblConvictedOffence" runat="server" Text="* Have you been convicted in any offence? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListConvictedOffence" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:RequiredFieldValidator ID="Validator50" ControlToValidate="rdListDismissedSuspended" Text="!" Font-Bold="true" runat="server" />
+                                    <asp:Label ID="lblDismissedSuspended" runat="server" Text="* Have you ever been dismissed or suspended from employment? :" />
+                                </td>
+                                <td class="td_left">
+                                    <asp:RadioButtonList ID="rdListDismissedSuspended" runat="server" DataSourceID="DS_OptionList"
+                                        DataTextField="Description" DataValueField="Description" RepeatDirection="Horizontal">
+                                    </asp:RadioButtonList>
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_style_sub" cellpadding="2" width="60%">
+                            <tr>
+                                <td class="td_left">
+                                    <asp:Label ID="lblDetailsAnswer" runat="server" Text="If your answer to any of these questions is 'Yes', please give details :" />
+                                </td>
+                            </tr>
+                            <tr>
+                                <td class="td_left">
+                                    <asp:TextBox ID="txtDetailsAnswer" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="6" Columns="90" MaxLength="500" />
+                                    <asp:CustomValidator ID="CustomValidator7" ClientValidationFunction="checkDetailsAnswer" runat="server" 
+                                        ErrorMessage="Please answer in details" Display="None" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="statement_style" cellpadding="2">
+                            <tr>
+                                <td>
+                                    <asp:CheckBox ID="chkDeclarationStatement" runat="server" />
+                                    <asp:Label ID="lblDeclarationStatement" runat="server" Text="* I HAVE READ THROUGH THE FORM AND ASSURE ALL INFORMATION FURNISHED 
+                                        IN THIS FORM ARE TRUE AND CORRECT. I HAVE NOT WILFULLY SUPPRESSED ANY MATERIAL FACT. I FURTHER AUTHORIZE 
+                                        TELE-CENTRE SERVICES PTE LTD TO SEEK VERIFICATION OF MY EMPLOYMENT RECORDS FROM ALL PRESENT AND PAST EMPLOYERS. 
+                                        I UNDERSTAND THAT MY EMPLOYMENT WITH THE COMPANY MAY BE TERMINATED WITH IMMEDIATE EFFECT SHOULD ANY INFORMATION PROVIDED HEREIN BE UNTRUE." />
+                                    <asp:CustomValidator ID="CustomValidator8" ClientValidationFunction="validateDeclarationStatement" runat="server" 
+                                        ErrorMessage="Please read & check Declaration Statement" Display="None" />
+                                </td>
+                            </tr>
+                        </table>
+                        <table class="table_margin">
+                            <tr>
+                                <td class="FieldNameCenter">
+                                    <asp:Button ID="btnDeclaration_Previous" CssClass="button" runat="server" Text="Previous" OnClick="btnLanguage_Click" CausesValidation="false" />
+                                    <asp:Button ID="btnSubmit" CssClass="button" runat="server" Text="Submit" OnClick="btnSubmit_Click" />
+                                </td>
+                            </tr>
+                        </table>
+                    </td>
+                </tr>
+            </table>
+        </div>
+        
+        <asp:SqlDataSource ID="DS_Children" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Children" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Country" runat="server" ConnectionString="<%$ ConnectionStrings:CS_General %>"
+            SelectCommand="SELECT * FROM [CountryCodes_ISO]">
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Language" runat="server" ConnectionString="<%$ ConnectionStrings:CS_CallFront %>"
+            SelectCommand="SELECT * FROM [cf_Language]">
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Citizenship" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Citizenship" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Gender" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Gender" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_ITKnowledge" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="IT_Knowledge" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_JobType" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Job_Type" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_LanguageSkill" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Language_Skill" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_MaritalStatus" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Marital_Status" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Nationality" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Country" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_NoticePeriod" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Notice_Period" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_NSStatus" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="NS_Status" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_OptionList" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Option_List" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Position" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Position" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Race" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Race" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Religion" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Religion" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_Sibling" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Sibling" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_WorkExperience" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Work_Experience" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+    </form>
+</body>
+</html>
