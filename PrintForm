@@ -1,0 +1,1506 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="PrintForm.aspx.cs" Inherits="PrintForm" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head id="Head1" runat="server">
+    <link href="Images/TC.ico" rel="icon" />
+    <title>Tele-centre | Applicant's Info - Deatils</title>
+    <link href="Style.css" rel="stylesheet" type="text/css" />   
+    <script language="javascript" type="text/javascript">
+        function printpage() {        
+            document.getElementById("btnPrintForm").style.visibility='hidden';   
+            document.getElementById("hlBack").style.visibility='hidden';      
+            window.print();
+        }
+    </script>  
+</head>
+<body>
+    <form id="form1" runat="server">
+        <asp:HyperLink ID="hlBack" runat="server" NavigateUrl="~/RetrieveInfo.aspx">Back to Summary</asp:HyperLink>&nbsp;&nbsp;&nbsp;&nbsp;
+        <asp:LinkButton ID="btnPrintForm" runat="server" Text="Print Application Form" OnClientClick="printpage();" />
+        <table class="table_style_printform" cellpadding="0">
+            <tr>
+                <td>
+                    <table class="table_margin">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label runat="server" Text="* Applied On :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="lblApplicationDate" runat="server" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblName" runat="server" Text="* Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtName" runat="server" Width="180px" ReadOnly="true" />
+                                <asp:Label ID="Label1" runat="server" Text="(Shown in NRIC/Passport)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblAlias" runat="server" Text="Alias :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtAlias" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblPosition" runat="server" Text="* Position Applied For :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPosition" runat="server" Width="200px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 22%;">                                
+                                <asp:Label ID="lblEnableRotation" runat="server" Text="* Able to Perform Shift Work :" Visible="false" />                                    
+                             </td>
+                             <td class="td_left" style="width: 20%;"> 
+                                <asp:Label ID="lblEnableRotationYesNo" runat="server" />                                   
+                            </td>
+                        </tr>
+                        <div id="divPositionOthers" runat="server">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblPositionOthers" runat="server" Text="* Position Applied (Others) :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPositionOthers" runat="server" Width="180px" ReadOnly="true" />                                
+                            </td>
+                        </tr>
+                        </div>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblPreferredJobType" runat="server" Text="* Preferred Job Type :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPreferredJobType" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>                        
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblExpectedSalary" runat="server" Text="* Expected Salary :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtExpectedSalary" runat="server" Width="120px" ReadOnly="true" />
+                                <asp:Label ID="lblExpectedSalaryCurrency" runat="server" Text="(SGD)" Font-Size="Small" />
+                                &nbsp;&nbsp;&nbsp;&nbsp;
+                                <asp:CheckBox ID="chkNegotiable" runat="server" Enabled="false" />
+                                <asp:Label ID="lblNegotiable" runat="server" Text="Negotiable" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblNoticePeriod" runat="server" Text="* Notice Period :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNoticePeriod" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <div id="divAvailableDate" runat="server">
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblAvailableDate" runat="server" Text="* Date Available to Start :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtAvailableDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        </div>
+                        <div id="divPeriodAvailabe" runat="server">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblPeriodAvailable" runat="server" Text="Period Available :" />
+                            </td>
+                            <td class="td_left">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblAvailableStartDate" runat="server" Text="* Start Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtAvailableStartDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblAvailableEndDate" runat="server" Text="* End Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtAvailableEndDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        </div>                                               
+                    </table>
+                    <asp:Label ID="lblPersonalParticular" runat="server" CssClass="title_bgcolor" Text="PERSONAL PARTICULARS" Width="100%" />
+                    <table class="table_margin">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblNRIC" runat="server" Text="# NRIC / FIN :" />
+                            </td>
+                            <td class="td_left" style="width: 15%;">
+                                <asp:TextBox ID="txtNRIC" runat="server" Width="120px" ReadOnly="true" />       
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblCitizenship" runat="server" Text="* Citizenship :" />
+                            </td>
+                            <td class="td_left" style="width: 45%;">
+                                <asp:TextBox ID="txtCitizenship" runat="server" Width="150px" ReadOnly="true" /> 
+                                <asp:Label ID="lblPRIssuedDate" runat="server" Text="* SPR Issued Date :" Visible="false" />
+                                <asp:TextBox ID="txtPRIssuedDate" runat="server" Width="100px" Visible="false" ReadOnly="true" />                               
+                            </td>                            
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblPassport" runat="server" Text="# Passport :" />
+                            </td>
+                            <td class="td_left" style="width: 15%;">
+                                <asp:TextBox ID="txtPassport" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblExpiryDate" runat="server" Text="Passport Expiry Date :" />
+                            </td>
+                            <td class="td_left" style="width: 45%;">
+                                 <asp:TextBox ID="txtExpiryDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblDOB" runat="server" Text="* Date of Birth :" />
+                            </td>
+                            <td class="td_left" style="width: 15%;">
+                                <asp:TextBox ID="txtDOB" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblNationality" runat="server" Text="* Nationality :" />
+                            </td>
+                            <td class="td_left" style="width: 45%;">
+                                <asp:TextBox ID="txtNationality" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblGender" runat="server" Text="* Gender :" />
+                            </td>
+                            <td class="td_left" style="width: 15%;">
+                                <asp:TextBox ID="txtGender" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblRace" runat="server" Text="* Race :" />
+                            </td>
+                            <td class="td_left" style="width: 45%;">
+                                <asp:TextBox ID="txtRace" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblRaceOthers" runat="server" Text="* Race (Others) :" Visible="false" />
+                                <asp:TextBox ID="txtRaceOthers" runat="server" Width="140px" Visible="false" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblMaritalStatus" runat="server" Text="* Marital Status :" />
+                            </td>
+                            <td class="td_left" style="width: 15%;">
+                                <asp:TextBox ID="txtMaritalStatus" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblReligion" runat="server" Text="Religion / Denomination :" />
+                            </td>
+                            <td class="td_left" style="width: 45%;">
+                                <asp:TextBox ID="txtReligion" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblContactInfo" runat="server" CssClass="title_bgcolor" Text="CONTACT INFORMATION" Width="100%" />
+                    <table class="table_margin">
+                        <tr>
+                            <td class="td_right_top" style="width: 20%;">
+                                <asp:Label ID="lblResidentialAddr" runat="server" Text="* Address (Local) :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtResidentialAddr" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="40" ReadOnly="true" />
+                            </td>
+                            <td class="td_right_top" style="width: 20%;">
+                                <asp:Label ID="lblHomeCountryAddr" runat="server" Text="Address (Overseas) :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtHomeCountryAddr" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="40" ReadOnly="true" />
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblEmailAddr" runat="server" Text="* Email Address :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtEmailAddr" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblHomeNo" runat="server" Text="Contact No. # (Home) :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtHomeNo" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                            </td>                                
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblMobileNo" runat="server" Text="# (Mobile) :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtMobileNo" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                            </td>                                
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblOverseasNo" runat="server" Text="# (Overseas) :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtOverseasNo" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>   
+                    </table>
+                    <div id="divSpouseParticular" runat="server">
+                    <asp:Label ID="lblSpouseParticular" runat="server" CssClass="title_bgcolor" Text="SPOUSE PARTICULARS" Width="100%" />
+                    <table class="table_margin">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblSpouseName" runat="server" Text="Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSpouseName" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblSpouseNRIC" runat="server" Text="NRIC :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSpouseNRIC" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblSpouseDOB" runat="server" Text="Date of Birth :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSpouseDOB" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblSpouseNationality" runat="server" Text="Nationality :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSpouseNationality" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblSpouseEmployer" runat="server" Text="Employer :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSpouseEmployer" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblSpouseOccupation" runat="server" Text="Occupation :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSpouseOccupation" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <asp:Label ID="lblChildrenParticular" runat="server" CssClass="title_bgcolor" Text="CHILDREN PARTICULARS" Width="100%" />                                                
+                    <table style="margin: 10px" width="98%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvChildren" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="Gender" DataField="Gender" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>                                                                                        
+                                        <asp:BoundField HeaderText="Name" DataField="Name" />
+                                        <asp:BoundField HeaderText="Date of Birth" DataField="DOB" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Employer" DataField="Employer" />
+                                        <asp:BoundField HeaderText="Occupation" DataField="Occupation" />
+                                    </Columns>
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblParentsParticular" runat="server" CssClass="title_bgcolor" Text="PARENTS PARTICULARS" Width="100%" />
+                    <table style="margin: 10px" width="98%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvParents" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField DataField="Relationship" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Name" DataField="Name" />
+                                        <asp:BoundField HeaderText="Date of Birth" DataField="DOB" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Employer" DataField="Employer" />
+                                        <asp:BoundField HeaderText="Occupation" DataField="Occupation" />
+                                    </Columns>
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblSiblingParticular" runat="server" CssClass="title_bgcolor" Text="SIBLING PARTICULARS" Width="100%" />
+                    <table style="margin: 10px" width="98%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvSibling" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="Gender" DataField="Gender" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Name" DataField="Name" />
+                                        <asp:BoundField HeaderText="Date of Birth" DataField="DOB" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Employer" DataField="Employer" />
+                                        <asp:BoundField HeaderText="Occupation" DataField="Occupation" />
+                                    </Columns>
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblEmergencyContact" runat="server" CssClass="title_bgcolor" Text="CONTACT - IN CASE OF EMERGENCY" Width="100%" />
+                    <table class="table_margin">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblContactPersonName" runat="server" Text="* Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtContactPersonName" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblContactPersonRelationship" runat="server" Text="* Relationship :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtContactPersonRelationship" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblContactPersonNo" runat="server" Text="Contact No. # (Local) :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtContactPersonNo" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblContactPersonOverseasNo" runat="server" Text="# (Overseas) :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtContactPersonOverseasNo" runat="server" Width="120px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblContactPersonAddr" runat="server" Text="* Address :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtContactPersonAddr" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="40" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="divNS" runat="server">
+                    <asp:Label ID="lblNS" runat="server" CssClass="title_bgcolor" Text="NATIONAL SERVICE" Width="100%" />
+                    <table class="table_margin">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblNSStatus" runat="server" Text="National Service Status :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtNSStatus" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td style="width: 20%;">
+                            </td>
+                            <td style="width: 30%;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblNSDateBegan" runat="server" Text="Date Began :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNSDateBegan" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right">
+                                <asp:Label ID="lblNSRank" runat="server" Text="Rank :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNSRank" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblNSDateCompletion" runat="server" Text="Date Completion :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNSDateCompletion" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right">
+                                <asp:Label ID="lblNSUnit" runat="server" Text="Unit :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNSUnit" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="50%">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblNSNext" runat="server" Text="Next Incamp Training (ICT)" BorderStyle="None" />
+                            </td>
+                            <td style="width: 30%;">
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblNSNextDate" runat="server" Text="Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNSNextDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblNSNextLength" runat="server" Text="Length :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtNSNextLength" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="Label2" runat="server" Text="(weeks)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="table_style_printform" cellpadding="0">
+            <tr>
+                <td>
+                    <asp:Label ID="lblEducation" runat="server" CssClass="title_bgcolor" Text="EDUCATION" Width="100%" />
+                    <table style="margin: 10px" width="98%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvEducation" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="* Qualification Attained" DataField="Qualification_Attained" />
+                                        <asp:BoundField HeaderText="* Name of School" DataField="Institution_Name" />
+                                        <asp:BoundField HeaderText="* Start Date" DataField="Start_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="* End Date" DataField="End_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>                                        
+                                        <asp:BoundField HeaderText="* Course / Major" DataField="Course_Major" />
+                                    </Columns>
+                                </asp:GridView>                
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblCourse" runat="server" CssClass="title_bgcolor" Text="VOCATIONAL / TRAINING COURSES" Width="100%" />
+                    <table style="margin: 10px" width="98%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvCourse" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="Name of School" DataField="Institution_Name" />
+                                        <asp:BoundField HeaderText="Course Title" DataField="Certificate_Title" />
+                                        <asp:BoundField HeaderText="Start Date" DataField="Start_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="End Date" DataField="End_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                    </Columns>
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblCertificate" runat="server" CssClass="title_bgcolor" Text="CERTIFICATIONS" Width="100%" />
+                    <table style="margin: 10px" width="98%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvCertificate" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="Name of Institution" DataField="Institution_Name" />
+                                        <asp:BoundField HeaderText="Certificate Title" DataField="Certificate_Title" />
+                                        <asp:BoundField HeaderText="Start Date" DataField="Start_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="End Date" DataField="End_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Certification Date" DataField="Certificate_Date" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" >
+                                            <ItemStyle Width="10%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="Certification Earned" DataField="Certificate_Earned" />
+                                    </Columns>
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblITKnowledge" runat="server" CssClass="title_bgcolor" Text="IT COMPETENCY / KNOWLEDGE" Width="100%" />
+                    <table style="margin: 10px" width="60%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvITKnowledge" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="Software Name" DataField="Software_Name" />
+                                        <asp:BoundField HeaderText="Proficiency" DataField="Proficiency" >
+                                            <ItemStyle Width="20%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                    </Columns>                                    
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="25%">
+                        <tr>
+                            <td class="FieldNameCenter" style="width: 40%;">
+                                <asp:Label ID="lblTypingSkill" runat="server" Text="Typing Skills" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td>
+                                <asp:TextBox ID="txtWordsPerMins" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblWordsPerMins" runat="server" Text="(Words Per Minute)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table class="table_style_printform" cellpadding="0">
+            <tr>
+                <td>
+                    <asp:Label ID="lblWorkExperience" runat="server" CssClass="title_bgcolor" Text="WORK EXPERIENCE" Width="100%" />
+                    <table class="title_style_sub">
+                        <tr>
+                            <td class="td_right" style="width: 25%;">
+                                <asp:Label ID="lblTotalWorkExperience" runat="server" Text="* Total No. of Work Experience :" />
+                            </td>
+                            <td class="td_left" style="width: 15%;">
+                                <asp:TextBox ID="txtTotalWorkExperience" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_left">
+                                <asp:CheckBox ID="chkCurrentWorking" runat="server" Visible="false" Enabled="false" />
+                                <asp:Label ID="lblCurrentWorking" runat="server" Text="Currently Working" Visible="false" />
+                            </td>
+                        </tr>
+                    </table>
+                    <div id="divInstruction" runat="server">
+                    <table class="title_style_sub">                            
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblInstruction" runat="server" Text="Please fill up in reverse chronological order / starting with most recent." ForeColor="#B73C00" />
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div id="divWorkExperience1" runat="server">
+                    <table class="title_style_sub">
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblWorkExperience1" runat="server" Text="Work Experience 1" Font-Bold="True" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="70%">
+                        <tr>
+                            <td class="td_right" style="width: 30%;">
+                                <asp:Label ID="lblStartDate1" runat="server" Text="Start Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtStartDate1" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEndDate1" runat="server" Text="End Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEndDate1" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEmployer1" runat="server" Text="Name of Employer :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEmployer1" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblLocation1" runat="server" Text="Location :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLocation1" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblPosition1" runat="server" Text="Position :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPosition1" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblJobScope1" runat="server" Text="Job Scope :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobScope1" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblJobType1" runat="server" Text="Job Type :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobType1" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblWorkHour1" runat="server" Text="Working Hours :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtWorkHour1" runat="server" Width="140px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblSalaryDrawn1" runat="server" Text="Salary Drawn :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSalaryDrawn1" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblSalaryDrawnCurrency1" runat="server" Text="(SGD)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblLeavingReason1" runat="server" Text="Reason for Leaving :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLeavingReason1" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceInfo1" runat="server" Text="Reference Information :" />
+                            </td>
+                            <td class="td_left">
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceName1" runat="server" Text="Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceName1" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceDesignation1" runat="server" Text="Designation :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceDesignation1" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceContactNo1" runat="server" Text="Contact No. :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceContactNo1" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceEmail1" runat="server" Text="Email :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceEmail1" runat="server" Width="180px" ReadOnly="true" />                                 
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div id="divWorkExperience2" runat="server">
+                    <table class="title_style_sub">
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblWorkExperience2" runat="server" Text="Work Experience 2" Font-Bold="True" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="70%">
+                        <tr>
+                            <td class="td_right" style="width: 30%">
+                                <asp:Label ID="lblStartDate2" runat="server" Text="Start Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtStartDate2" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEndDate2" runat="server" Text="End Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEndDate2" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEmployer2" runat="server" Text="Name of Employer :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEmployer2" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblLocation2" runat="server" Text="Location :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLocation2" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblPosition2" runat="server" Text="Position :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPosition2" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblJobScope2" runat="server" Text="Job Scope :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobScope2" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblJobType2" runat="server" Text="Job Type :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobType2" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblWorkHour2" runat="server" Text="Working Hours :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtWorkHour2" runat="server" Width="140px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblSalaryDrawn2" runat="server" Text="Salary Drawn :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSalaryDrawn2" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblSalaryDrawnCurrency2" runat="server" Text="(SGD)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblLeavingReason2" runat="server" Text="Reason for Leaving :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLeavingReason2" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceInfo2" runat="server" Text="Reference Information :" />
+                            </td>
+                            <td class="td_left">
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceName2" runat="server" Text="Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceName2" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceDesignation2" runat="server" Text="Designation :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceDesignation2" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceContactNo2" runat="server" Text="Contact No. :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceContactNo2" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceEmail2" runat="server" Text="Email :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceEmail2" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div id="divWorkExperience3" runat="server">
+                    <table class="title_style_sub">
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblWorkExperience3" runat="server" Text="Work Experience 3" Font-Bold="True" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="70%">
+                        <tr>
+                            <td class="td_right" style="width: 30%">
+                                <asp:Label ID="lblStartDate3" runat="server" Text="Start Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtStartDate3" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEndDate3" runat="server" Text="End Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEndDate3" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEmployer3" runat="server" Text="Name of Employer :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEmployer3" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblLocation3" runat="server" Text="Location :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLocation3" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblPosition3" runat="server" Text="Position :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPosition3" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblJobScope3" runat="server" Text="Job Scope :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobScope3" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblJobType3" runat="server" Text="Job Type :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobType3" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblWorkHour3" runat="server" Text="Working Hours :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtWorkHour3" runat="server" Width="140px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblSalaryDrawn3" runat="server" Text="Salary Drawn :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSalaryDrawn3" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblSalaryDrawnCurrency3" runat="server" Text="(SGD)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblLeavingReason3" runat="server" Text="Reason for Leaving :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLeavingReason3" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceInfo3" runat="server" Text="Reference Information :" />
+                            </td>
+                            <td class="td_left">
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceName3" runat="server" Text="Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceName3" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceDesignation3" runat="server" Text="Designation :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceDesignation3" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceContactNo3" runat="server" Text="Contact No. :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceContactNo3" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceEmail3" runat="server" Text="Email :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceEmail3" runat="server" Width="180px" ReadOnly="true" />                                 
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div id="divWorkExperience4" runat="server">
+                    <table class="title_style_sub">
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblWorkExperience4" runat="server" Text="Work Experience 4" Font-Bold="True" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="70%">
+                        <tr>
+                            <td class="td_right" style="width: 30%">
+                                <asp:Label ID="lblStartDate4" runat="server" Text="Start Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtStartDate4" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEndDate4" runat="server" Text="End Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEndDate4" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEmployer4" runat="server" Text="Name of Employer :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEmployer4" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblLocation4" runat="server" Text="Location :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLocation4" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblPosition4" runat="server" Text="Position :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPosition4" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblJobScope4" runat="server" Text="Job Scope :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobScope4" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblJobType4" runat="server" Text="Job Type :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobType4" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblWorkHour4" runat="server" Text="Working Hours :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtWorkHour4" runat="server" Width="140px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblSalaryDrawn4" runat="server" Text="Salary Drawn :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSalaryDrawn4" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblSalaryDrawnCurrency4" runat="server" Text="(SGD)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblLeavingReason4" runat="server" Text="Reason for Leaving :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLeavingReason4" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceInfo4" runat="server" Text="Reference Information :" />
+                            </td>
+                            <td class="td_left">
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceName4" runat="server" Text="Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceName4" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceDesignation4" runat="server" Text="Designation :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceDesignation4" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceContactNo4" runat="server" Text="Contact No. :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceContactNo4" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceEmail4" runat="server" Text="Email :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceEmail4" runat="server" Width="180px" ReadOnly="true" />                                  
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                    <div id="divWorkExperience5" runat="server">
+                    <table class="title_style_sub">
+                        <tr>
+                            <td>
+                                <asp:Label ID="lblWorkExperience5" runat="server" Text="Work Experience 5" Font-Bold="True" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="70%">
+                        <tr>
+                            <td class="td_right" style="width: 30%">
+                                <asp:Label ID="lblStartDate5" runat="server" Text="Start Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtStartDate5" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEndDate5" runat="server" Text="End Date :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEndDate5" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblEmployer5" runat="server" Text="Name of Employer :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtEmployer5" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblLocation5" runat="server" Text="Location :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLocation5" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblPosition5" runat="server" Text="Position :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtPosition5" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblJobScope5" runat="server" Text="Job Scope :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobScope5" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblJobType5" runat="server" Text="Job Type :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtJobType5" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblWorkHour5" runat="server" Text="Working Hours :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtWorkHour5" runat="server" Width="140px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblSalaryDrawn5" runat="server" Text="Salary Drawn :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtSalaryDrawn5" runat="server" Width="100px" ReadOnly="true" />
+                                <asp:Label ID="lblSalaryDrawnCurrency5" runat="server" Text="(SGD)" Font-Size="Small" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right_top">
+                                <asp:Label ID="lblLeavingReason5" runat="server" Text="Reason for Leaving :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLeavingReason5" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="3" Columns="60" ReadOnly="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceInfo5" runat="server" Text="Reference Information :" />
+                            </td>
+                            <td class="td_left">
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceName5" runat="server" Text="Name :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceName5" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceDesignation5" runat="server" Text="Designation :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceDesignation5" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceContactNo5" runat="server" Text="Contact No. :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceContactNo5" runat="server" Width="180px" ReadOnly="true" />                                    
+                            </td>                                
+                        </tr>
+                        <tr>
+                            <td class="td_right">
+                                <asp:Label ID="lblReferenceEmail5" runat="server" Text="Email :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtReferenceEmail5" runat="server" Width="180px" ReadOnly="true" />                                   
+                            </td>
+                        </tr>
+                    </table>
+                    </div>
+                </td>
+            </tr>
+        </table>
+        <table class="table_style_printform" cellpadding="0">
+            <tr>
+                <td>
+                    <asp:Label ID="lblLanguage" runat="server" CssClass="title_bgcolor" Text="LANGUAGES" Width="100%" />
+                    <table class="title_style_sub">
+                        <tr>
+                            <td>
+                                <asp:Label ID="Label6" runat="server" Text="Please select at least one language and corresponding proficiencies." ForeColor="#B73C00" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="100%">
+                        <tr>
+                            <td>                                    
+                                <asp:GridView ID="gvLanguage" runat="server" AutoGenerateColumns="False">
+                                    <Columns>
+                                        <asp:BoundField HeaderText="* Language" DataField="Language" />
+                                        <asp:BoundField HeaderText="* Spoken" DataField="Spoken" >
+                                            <ItemStyle Width="23%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="* Written" DataField="Written" >
+                                            <ItemStyle Width="23%" HorizontalAlign="Center" />
+                                        </asp:BoundField>
+                                        <asp:BoundField HeaderText="* Reading" DataField="Reading" >
+                                            <ItemStyle Width="23%" HorizontalAlign="Center" />
+                                        </asp:BoundField>                                        
+                                    </Columns>                                    
+                                </asp:GridView>
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="title_style_sub">
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblLanguagesOth" runat="server" Text="Additional Language Skills (if any)" Font-Bold="true" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtLanguagesOth" runat="server" Width="280px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <table class="table_style_printform" cellpadding="0">
+            <tr>
+                <td>
+                    <asp:Label ID="lblAdditionalInfo" runat="server" CssClass="title_bgcolor" Text="ADDITIONAL INFORMATION" Width="100%" />
+                    <table class="table_margin">                        
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label runat="server" Text="Attached Files :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="lblAttachedFiles" runat="server" />
+                            </td>
+                        </tr>
+                    </table>
+                    <asp:Label ID="lblDeclaration" runat="server" CssClass="title_bgcolor" Text="DECLARATION" Width="100%" />
+                    <table class="table_style_declaration">
+                        <tr>
+                            <td class="td_left" style="width: 50%;">                                
+                                <asp:Label ID="lblKnownStaff" runat="server" Text="* Do you know any staff working in Tele-centre Services Pte Ltd? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListKnownStaff" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblKnownStaffYes" runat="server" Text="(If Yes, please indicate below) :" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="60%">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblStaffName" runat="server" Text="Full Name :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtStaffName" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblStaffRelationship" runat="server" Text="Relationship :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtStaffRelationship" runat="server" Width="180px" ReadOnly="true" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table_style_declaration">
+                        <tr>
+                            <td class="td_left" style="width: 50%;">                                
+                                <asp:Label ID="lblWorkTeleCentreBefore" runat="server" Text="* Have you worked with Tele-centre before? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListWorkTeleCentreBefore" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblWorkBeforeYes" runat="server" Text="(If Yes, please indicate below) :" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="90%">
+                        <tr>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblTCStartDate" runat="server" Text="Start Date :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtTCStartDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblTCEndDate" runat="server" Text="End Date :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtTCEndDate" runat="server" Width="100px" ReadOnly="true" />
+                            </td>
+                            <td class="td_right" style="width: 20%;">
+                                <asp:Label ID="lblTCPosition" runat="server" Text="Position :" />
+                            </td>
+                            <td class="td_left" style="width: 30%;">
+                                <asp:TextBox ID="txtTCPosition" runat="server" Width="180px" ReadOnly="true" />                              
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="table_style_declaration">
+                        <tr>
+                            <td class="td_left" style="width: 50%;"> 
+                                <asp:Label ID="lblPhysicalImpairment" runat="server" Text="* Have you been or are suffering from any physical impairment? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListPhysicalImpairment" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblMajorDiseaseIllness" runat="server" Text="* Have you been or are suffering from any major disease or illness? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListMajorDiseaseIllness" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblMinorDiseaseIllness" runat="server" Text="* Have you been or are suffering from any minor disease or illness? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListMinorDiseaseIllness" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblLongtermMedication" runat="server" Text="* Have you been or are on long term medication? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListLongtermMedication" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblBankruptcyStatus" runat="server" Text="* Have you been or are on bankruptcy status? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListBankruptcyStatus" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblConvictedOffence" runat="server" Text="* Have you been convicted in any offence? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListConvictedOffence" runat="server" /> 
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblDismissedSuspended" runat="server" Text="* Have you ever been dismissed or suspended from employment? :" />
+                            </td>
+                            <td class="td_left">
+                                <asp:Label ID="rdListDismissedSuspended" runat="server" /> 
+                            </td>
+                        </tr>
+                    </table>
+                    <table style="margin: 10px" width="60%">
+                        <tr>
+                            <td class="td_left">
+                                <asp:Label ID="lblDetailsAnswer" runat="server" Text="If your answer to any of these questions is 'Yes', please give details :" />
+                            </td>
+                        </tr>
+                        <tr>
+                            <td class="td_left">
+                                <asp:TextBox ID="txtDetailsAnswer" runat="server" CssClass="textarea" TextMode="MultiLine" Rows="6" Columns="90" ReadOnly="true" />
+                            </td>
+                        </tr>
+                    </table>
+                    <table class="statement_style" cellpadding="2">
+                        <tr>
+                            <td>
+                                <asp:CheckBox ID="chkDeclarationStatement" runat="server" Enabled="false" />
+                                <asp:Label ID="lblDeclarationStatement" runat="server" Text="* I HAVE READ THROUGH THE FORM AND ASSURE ALL INFORMATION FURNISHED 
+                                    IN THIS FORM ARE TRUE AND CORRECT. I HAVE NOT WILFULLY SUPPRESSED ANY MATERIAL FACT. I FURTHER AUTHORIZE 
+                                    TELE-CENTRE SERVICES PTE LTD TO SEEK VERIFICATION OF MY EMPLOYMENT RECORDS FROM ALL PRESENT AND PAST EMPLOYERS. 
+                                    I UNDERSTAND THAT MY EMPLOYMENT WITH THE COMPANY MAY BE TERMINATED WITH IMMEDIATE EFFECT SHOULD ANY INFORMATION PROVIDED HEREIN BE UNTRUE." />
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        <br /><br /><br /><br />
+        <table class="table_style_printform">
+            <tr>
+                <td class="td_left">_________________________</td>                
+            </tr>
+            <tr>
+                <td class="td_left">Applicant's Signature</td>
+                <td class="td_right">Date : <%# DateTime.Today.ToShortDateString() %></td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
