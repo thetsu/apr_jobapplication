@@ -1,0 +1,140 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="RetrieveInfo.aspx.cs" Inherits="RetrieveInfo" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+    <link href="Images/TC.ico" rel="icon" />
+    <title>Tele-centre | Applicant's Info - Summary</title>
+    <link href="Style.css" rel="stylesheet" type="text/css" />    
+</head>
+<body>
+    <form id="form1" runat="server">
+        <table width="98%" style="margin-left: 10px">
+            <tr>
+                <td>
+                    <asp:Label ID="Label1" runat="server" Text="Job Applicants' Information - Summary" Font-Size="Large" Font-Bold="true" />
+                </td>
+            </tr>
+        </table>
+        <table width="90%" style="margin-left: 10px">
+            <tr>
+                <td class="td_left">
+                    <asp:Label ID="lblID" runat="server" Text="NRIC/FIN/Passport :" />
+                </td>
+                <td class="td_right">
+                    <asp:TextBox ID="txtID" runat="server" />
+                </td>
+                <td class="td_left">
+                    <asp:Label ID="lblPosition" runat="server" Text="Position Applied :" />
+                </td>
+                <td class="td_right">
+                    <asp:DropDownList ID="ddlPosition" runat="server" DataSourceID="DS_Position" DataTextField="Description"
+                        DataValueField="Description" AppendDataBoundItems="True">
+                        <asp:ListItem>All</asp:ListItem>
+                    </asp:DropDownList>
+                </td>
+                <td class="td_left">
+                    <asp:Label ID="lblName" runat="server" Text="Name :" />
+                </td>
+                <td class="td_right">
+                    <asp:TextBox ID="txtName" runat="server" />
+                </td>
+                <td class="td_left">
+                    <asp:Label ID="lblApplicationStatus" runat="server" Text="Application Status :" />
+                </td>
+                <td class="td_right">
+                    <asp:DropDownList ID="ddlApplicationStatus" runat="server" DataSourceID="DS_ApplicationStatus" DataTextField="Description"
+                        DataValueField="Description" AppendDataBoundItems="True">
+                        <asp:ListItem>All</asp:ListItem>
+                    </asp:DropDownList>
+                </td>
+                <td class="td_right" style="width: 10%">
+                    <asp:Button ID="btnSearch" runat="server" Text="Search" OnClick="btnSearch_Click" />
+                </td>
+            </tr>            
+        </table><br />
+        <%--<table width="90%" style="margin-left: 10px">
+            <tr>
+                <td class="td_left"></td>
+                <td class="td_right" style="border-color: #336A40; border-width: 2px; border-style: solid; width: 30%">
+                    <asp:Label ID="lblNewApplicationStatus" runat="server" Text="New Application Status :" />&nbsp;&nbsp;&nbsp;
+                    <asp:DropDownList ID="ddlNewApplicationStatus" runat="server" DataSourceID="DS_ApplicationStatus" DataTextField="Description"
+                        DataValueField="Description" AppendDataBoundItems="True">
+                        <asp:ListItem>Select Option</asp:ListItem>
+                    </asp:DropDownList>
+                </td>
+            </tr>
+        </table>--%>
+        <table width="98%">
+            <tr>
+                <td>
+                    <table width="100%" style="margin-left: 10px">
+                        <tr>
+                            <td>
+                                <asp:Panel ID="pnlApplicantInfo" runat="server" ScrollBars="Auto" Height="500px">                                   
+                                <%--<asp:GridView ID="gvApplicantInfo" runat="server" AutoGenerateColumns="False" CellPadding="3" 
+                                    GridLines="Vertical" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px"
+                                    OnRowEditing="gvApplicantInfo_RowEditing" 
+                                    OnRowUpdating="gvApplicantInfo_RowUpdating" 
+                                    OnRowCancelingEdit="gvApplicantInfo_RowCanceling">--%>
+                                <asp:GridView ID="gvApplicantInfo" runat="server" AutoGenerateColumns="False" CellPadding="3" 
+                                    GridLines="Vertical" BackColor="White" BorderColor="#999999" BorderStyle="None" BorderWidth="1px" 
+                                    AllowSorting="true" OnSorting="gvApplicantInfo_Sorting">
+                                    <Columns>                                       
+                                        <asp:HyperLinkField SortExpression="Ja_Id" HeaderText="NRIC/FIN Passport" DataTextField="Ja_Id" DataNavigateUrlFields="Ja_Id" DataNavigateUrlFormatString="PrintForm.aspx?value={0}"/>
+                                        <asp:BoundField SortExpression="Position_Applied" HeaderText="Position Applied" DataField="Position_Applied" >
+                                            <ItemStyle Width="15%" HorizontalAlign="Left" />
+                                        </asp:BoundField>                                                                                     
+                                        <asp:BoundField SortExpression="Name" HeaderText="Name" DataField="Name" >
+                                            <ItemStyle Width="15%" />
+                                        </asp:BoundField>
+                                        <asp:BoundField SortExpression="DOB" HeaderText="Date of Birth" DataField="DOB" DataFormatString="{0:dd/MM/yyyy}" HtmlEncode="False" />
+                                        <asp:BoundField SortExpression="Age" HeaderText="Age" DataField="Age" />
+                                        <asp:BoundField SortExpression="Gender" HeaderText="Gender" DataField="Gender" />
+                                        <asp:BoundField SortExpression="Marital_Status" HeaderText="Marital Status" DataField="Marital_Status" />
+                                        <asp:BoundField SortExpression="Citizenship" HeaderText="Citizenship" DataField="Citizenship" >
+                                            <ItemStyle Width="10%" />
+                                        </asp:BoundField>
+                                        <asp:BoundField SortExpression="Nationality" HeaderText="Nationality" DataField="Nationality" >
+                                            <ItemStyle Width="10%" />
+                                        </asp:BoundField>
+                                        <asp:BoundField SortExpression="Race" HeaderText="Race" DataField="Race" />
+                                        <asp:BoundField SortExpression="Timestamp_Applied" HeaderText="Applied On" DataField="Timestamp_Applied" >
+                                            <ItemStyle Width="15%" />
+                                        </asp:BoundField>
+                                        <asp:BoundField SortExpression="Application_Status" HeaderText="Application Status" DataField="Application_Status" />
+                                        <%--<asp:CommandField ShowEditButton="True"/>--%>
+                                    </Columns>                                    
+                                    <RowStyle BackColor="#EEEEEE" ForeColor="Black" />
+                                    <FooterStyle BackColor="#CCCCCC" ForeColor="Black" />
+                                    <PagerStyle BackColor="#999999" ForeColor="Black" HorizontalAlign="Center" />
+                                    <SelectedRowStyle BackColor="#008A8C" Font-Bold="True" ForeColor="White" />
+                                    <HeaderStyle BackColor="#000084" Font-Bold="True" ForeColor="White" />
+                                    <AlternatingRowStyle BackColor="Gainsboro" />
+                                </asp:GridView>
+                                <asp:Label ID="lblMsg" runat="server" Text="There is no relevant applicants' information!" 
+                                    Font-Size="Large" Visible="false" BackColor="burlyWood" />
+                                </asp:Panel>                                               
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+        
+        <asp:SqlDataSource ID="DS_Position" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Position" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+        <asp:SqlDataSource ID="DS_ApplicationStatus" runat="server" ConnectionString="<%$ ConnectionStrings:CS_HumanResource %>"
+            SelectCommand="SELECT * FROM [JobApplication_Code] WHERE ([Type] = @Type) ORDER BY [Sort_Order]">
+            <SelectParameters>
+                <asp:Parameter DefaultValue="Application_Status" Name="Type" Type="String" />
+            </SelectParameters>
+        </asp:SqlDataSource>
+    </form>
+</body>
+</html>
