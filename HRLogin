@@ -1,0 +1,41 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="HRLogin.aspx.cs" Inherits="HRLogin" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<html xmlns="http://www.w3.org/1999/xhtml" >
+<head id="Head1" runat="server">
+    <link href="Images/TC.ico" rel="icon" />
+    <title>Tele-centre | LogIn</title>
+    <link href="Style.css" rel="stylesheet" type="text/css" />    
+</head>
+<body>
+    <form id="form1" runat="server">
+        <table width="100%" style="margin-top: 5%">
+            <tr>
+                <td align="center">
+                    <asp:Label ID="Label1" Text="Please enter Username and Password to review Job Applicants' Information." 
+                        Font-Size="Large" Font-Bold="true" runat="server"></asp:Label>
+                </td>
+            </tr>
+        </table>
+        <table width="100%" style="margin-top: 5%">            
+            <tr>
+                <td align="center">
+                    <table>
+                        <tr>
+                            <td align="left">
+                                <asp:Login ID="liHR" OnAuthenticate="liHR_Authenticate" BackColor="#FFE6E6" BorderColor="#FF7777" 
+                                    DisplayRememberMe="false" BorderPadding="4" BorderStyle="Solid" BorderWidth="2px" runat="server">
+                                    <TitleTextStyle BackColor="#FF9595" Font-Bold="True" ForeColor="White" />
+                                    <InstructionTextStyle Font-Italic="True" />
+                                    <LoginButtonStyle BackColor="#FF9595" BorderColor="#FF7171" BorderStyle="Solid" BorderWidth="1px" />
+                                </asp:Login>
+                            </td>
+                        </tr>
+                    </table>
+                </td>
+            </tr>
+        </table>
+    </form>
+</body>
+</html>
