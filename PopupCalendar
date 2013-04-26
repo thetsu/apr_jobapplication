@@ -1,0 +1,26 @@
+<%@ Page Language="C#" AutoEventWireup="true" CodeFile="PopupCalendar.aspx.cs" Inherits="PopupCalendar" %>
+
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+
+<%@ Register src="CalendarControl.ascx" tagname="CalendarCtrl" tagprefix="uc1" %>
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head runat="server">
+    <title>Tele-centre | PopupCalendar</title>
+    
+    <script language="javascript" type="text/javascript">
+        function SetDate(dateValue) {
+            datePicker = window.location.search.substr(1).substring(4);
+            thisForm = window.opener.document.forms[0].elements[datePicker].value = dateValue;
+            self.close();
+        }
+    </script>
+</head>
+<body>
+    <form id="form1" runat="server">
+    <div>
+        <uc1:CalendarCtrl ID="CalendarCtrl1" runat="server" />
+    </div>
+    </form>
+</body>
+</html>
