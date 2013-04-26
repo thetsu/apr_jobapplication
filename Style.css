@@ -1,0 +1,152 @@
+.tab 
+{
+  background: #FFCC99;
+	border: solid 1px #FF9900;	
+    color: #000000;
+    display: block;
+    float: left;
+    height: 2em;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;    
+}
+
+.tab_current
+{
+	background: #FF8040;
+	border: solid 1px #FF9900;
+    color: #FFFFFF;
+    display: block;
+    float: left;
+    font-weight: bold;
+    height: 2em;
+    padding-top: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    text-decoration: none;
+} 
+
+.button
+{
+	background: #FF8040;
+	border-color: #FF8040;
+	border-style: outset;
+	border-width: medium;
+}
+
+.div_style
+{
+	margin-top: 10px;
+	margin-bottom: 30px;
+	margin-left: 80px;
+}
+
+.table_style_top
+{
+	margin-top: 20px;
+	margin-left: 70px;
+	width: 1000px;
+}
+
+.table_style
+{
+	background-color: White; 
+	border-color: #336A40; 
+	border-width: 3px; 
+	border-style: solid; 
+	width: 1000px;
+}
+
+.table_style_printform
+{
+	background-color: White; 
+	border-color: White;
+	width: 1000px;
+}
+
+.table_style_sub
+{
+	background-color: White; 
+	border-color: #336A40; 
+	border-width: 2px; 
+	border-style: solid; 
+	margin: 10px;
+	margin-bottom: 20px;
+}
+
+.table_style_declaration
+{
+	margin: 10px; 
+	width: 98%;
+}
+
+.table_margin
+{
+	margin: 10px; 
+	margin-bottom: 20px;
+	width: 100%;
+}
+
+td.FieldNameCenter
+{
+	text-align: center;
+	font-weight: bold;
+}
+
+.td_left
+{
+	text-align: left; 
+	padding-left: 5px;
+}
+
+.td_right
+{
+	text-align: right; 
+	padding-right: 5px;
+}
+
+.td_right_top
+{
+	text-align: right; 
+	padding-right: 5px; 
+	vertical-align: top;
+}
+
+.label_style
+{
+	text-align: left;
+	padding-left: 10px;
+	font-weight: bold;
+}
+
+.statement_style
+{
+	background-color: White; 
+	border-color: #9B0000; 
+	border-width: 2px; 
+	border-style: solid; 
+	margin: 10px;
+	width: 98%;
+	text-align: justify;
+	padding-left: 5px;
+}
+
+.title_bgcolor
+{
+	 background-color: #8BC790;
+}
+
+.title_style_sub
+{
+	margin: 10px;
+	width: 98%;
+}
+
+.textarea
+{
+	font-family: Times New Roman;
+	font-size: 14px;
+}
+
+
